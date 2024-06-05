@@ -1,0 +1,109 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Reservation;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+
+class ReservationController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $user_id = Auth::id();
+
+        $reservations = Reservation::where('user_id', $user_id)->get();
+
+        return view('reservations.index', compact('reservations'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create($store_id)
+    {
+        return view('reservations.create', compact('store_id'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request, $store_id)
+    {
+        $reservation = new Reservation();
+        $reservation->reservation_date = $request->input('reservation_date');
+        $reservation->reservation_time = $request->input('reservation_time');
+        $reservation->reservation_people_number = $request->input('reservation_people_number');
+        $reservation->store_id = $request->input('store_id');
+        $reservation->user_id = Auth::user()->id;
+        $reservation->save();
+
+        return to_route('reservations.index');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Reservation  $reservation
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Reservation $reservation)
+    {
+        return view('reservations.show', compact('reservation'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Reservation  $reservation
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Reservation $reservation)
+    {
+        $store_id = $reservation->store_id;
+
+        return view('reservations.edit', compact('reservation', 'store_id'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Reservation  $reservation
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Reservation $reservation)
+    {
+        $reservation->reservation_date = $request->input('reservation_date');
+        $reservation->reservation_time = $request->input('reservation_time');
+        $reservation->reservation_people_number = $request->input('reservation_people_number');
+        $reservation->store_id = $request->input('store_id');
+        $reservation->user_id = Auth::user()->id;
+        $reservation->update();
+
+        return to_route('reservations.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Reservation  $reservation
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Reservation $reservation)
+    {
+        $reservation->delete();
+
+        return to_route('reservations.index');
+    }
+}
