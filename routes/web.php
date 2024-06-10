@@ -7,6 +7,7 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\WebController;
+use App\Http\Controllers\SubscriptionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -56,4 +57,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('reservations/{reservation}', 'update')->name('reservations.update');
         Route::delete('reservations/{reservation}', 'destroy')->name('reservations.destroy');
     });
-});
+
+    Route::controller(SubscriptionController::class)->group(function () {
+        Route::get('checkout-payment', 'checkout')->name('checkout.session');
+        Route::get('checkout/success', 'success')->name('checkout.success');
+        Route::get('change-card', 'changeCard')->name('change.card');
+        Route::get('change-card/success', 'changeCardSuccess')->name('change.card.success');
+        Route::get('cancel-subscription', 'cancelSubscription')->name('cancel.subscription');
+    });
+}); 
