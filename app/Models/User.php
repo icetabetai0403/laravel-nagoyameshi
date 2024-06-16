@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Cashier\Billable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, Billable;
 
     /**
      * The attributes that are mass assignable.
@@ -58,5 +59,30 @@ class User extends Authenticatable implements MustVerifyEmail
     public function reservations()
     {
         return $this->hasMany(Reservation::class);
+    }
+
+    /*
+    public function updateDefaultPaymentMethod($paymentMethodId)
+{
+    $this->updateDefaultPaymentMethodFromStripe($paymentMethodId);
+    $this->subscription()->updateDefaultPaymentMethod($paymentMethodId);
+} */
+    public function paymentMethods()
+    {
+        return $this->hasMany(PaymentMethod::class);
+    }
+
+    public function addPaymentMethod($paymentMethodId)
+    {
+        $stripeCustomer = $this->asStripeCustomer();
+
+        $paymentMethod = \Stripe\PaymentMethod::retrieve($paymentMethodId);
+
+        // 支払い方法がまだ顧客にアタッチされていない場合にのみ、アタッチを実行
+        if ($paymentMethod->customer !== $stripeCustomer->id) {
+            $paymentMethod->attach(['customer' => $stripeCustomer->id]);
+        }
+
+        $this->updateDefaultPaymentMethodFromStripe($paymentMethodId);
     }
 }
