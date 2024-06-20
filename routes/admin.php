@@ -5,6 +5,7 @@ use Illuminate\Routing\Router;
 use App\Admin\Controllers\AuthController;
 use App\Admin\Controllers\UserController;
 use App\Admin\Controllers\CategoryController;
+use App\Admin\Controllers\StoreController;
 
 use Encore\Admin\Facades\Admin;
 
@@ -27,4 +28,5 @@ Route::group([
   $router->get('/', 'HomeController@index')->name('home');
   $router->resource('users', UserController::class);
   $router->resource('categories', CategoryController::class);
+  $router->resource('stores', StoreController::class);
 });

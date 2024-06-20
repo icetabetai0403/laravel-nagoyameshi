@@ -46,10 +46,9 @@ return [
 
         'admin' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/admin'),
-            'url' => env('APP_URL').'/storage/admin',
+            'root' => public_path(''),
+            'url' => env('APP_URL'),
             'visibility' => 'public',
-            'throw' => false,
         ],
 
         's3' => [
