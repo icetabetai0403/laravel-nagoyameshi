@@ -177,3 +177,9 @@ label {
     color: #ffffff;
     background-color: #0fbe9f;
 }
+
+.nagoyameshi-delete-submit-button {
+    border-radius: 2px;
+    color: #ffffff;
+    background-color: #d94b0e;
+}
