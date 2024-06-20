@@ -26,7 +26,11 @@
                 @foreach($stores as $store)
                 <div class="col-3">
                     <a href="{{route('stores.show', $store)}}">
+                    @if ($store->image !== "")
+                        <img src="{{ asset($store->image) }}" class="img-thumbnail">
+                        @else
                         <img src="{{ asset('img/dummy.png')}}" class="img-thumbnail">
+                        @endif
                     </a>
                     <div class="row">
                         <div class="col-12">

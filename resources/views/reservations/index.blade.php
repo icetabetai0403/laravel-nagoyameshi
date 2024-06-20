@@ -17,7 +17,11 @@
         <tr>
             <td>
                 <a href="{{ route('stores.show', $reservation->store->id) }}">
+                    @if ($reservation->store->image)
+                    <img src="{{ asset($reservation->store->image) }}" class="img-thumbnail" style="max-width: 100px;">
+                    @else
                     <img src="{{ asset('img/dummy.png') }}" class="img-thumbnail" style="max-width: 100px;">
+                    @endif
                 </a>
             </td>
             <td><p class="h3">{{ $reservation->store->name }}</p></td>

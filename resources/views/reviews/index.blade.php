@@ -5,7 +5,13 @@
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-4">
-                <a href="{{ route('stores.show', $review->store->id) }}"><img src="{{ asset('img/dummy.png') }}" class="img-fluid"></a>
+                <a href="{{ route('stores.show', $review->store->id) }}">
+                    @if ($review->store->image)
+                    <img src="{{ asset($review->store->image) }}" class="img-fluid">
+                    @else
+                    <img src="{{ asset('img/dummy.png') }}" class="img-fluid">
+                    @endif
+                </a>
             </div>
             <div class="col-md-8">
                 <p class="h3">{{ $review->store->name }}</p>
