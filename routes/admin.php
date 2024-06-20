@@ -1,10 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Routing\Router;
 use App\Admin\Controllers\AuthController;
 use App\Admin\Controllers\UserController;
+use App\Admin\Controllers\CategoryController;
+
 use Encore\Admin\Facades\Admin;
 
+// 認証ルート
 Route::group(['prefix' => config('admin.route.prefix'), 'middleware' => config('admin.route.middleware')], function () {
   Route::get('auth/login', [AuthController::class, 'getLogin'])->name('admin.login');
   Route::post('auth/login', [AuthController::class, 'postLogin']);
@@ -13,6 +17,14 @@ Route::group(['prefix' => config('admin.route.prefix'), 'middleware' => config('
 
 Admin::registerAuthRoutes();
 
-Route::get('/', 'HomeController@index');
-
-Route::resource('users', UserController::class);
+// 管理画面のルート
+Route::group([
+  'prefix'        => config('admin.route.prefix'),
+  'namespace'     => config('admin.route.namespace'),
+  'middleware'    => config('admin.route.middleware'),
+  'as'            => config('admin.route.prefix') . '.',
+], function (Router $router) {
+  $router->get('/', 'HomeController@index')->name('home');
+  $router->resource('users', UserController::class);
+  $router->resource('categories', CategoryController::class);
+});

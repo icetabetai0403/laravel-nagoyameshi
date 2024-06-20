@@ -1,5 +1,7 @@
 <?php
 
+use Encore\Admin\Facades\Admin;
+
 /**
  * Laravel-admin - admin builder based on Laravel.
  * @author z-song <https://github.com/z-song>
@@ -23,3 +25,11 @@ Encore\Admin\Form::forget(['map', 'editor']);
 Encore\Admin\Facades\Admin::routes();
 
 require base_path('routes/admin.php');
+
+Admin::menu(function ($menu) {
+  $menu->add([
+      'title' => 'Categories',
+      'icon'  => 'fa-bars',
+      'uri'   => 'categories',
+  ]);
+});
