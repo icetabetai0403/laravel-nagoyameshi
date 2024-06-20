@@ -8,10 +8,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Cashier\Billable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, Billable;
+    use HasApiTokens, HasFactory, Notifiable, Billable, SoftDeletes;
+
+    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -62,15 +65,11 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /*
-    public function updateDefaultPaymentMethod($paymentMethodId)
-{
-    $this->updateDefaultPaymentMethodFromStripe($paymentMethodId);
-    $this->subscription()->updateDefaultPaymentMethod($paymentMethodId);
-} */
     public function paymentMethods()
     {
         return $this->hasMany(PaymentMethod::class);
     }
+    
 
     public function addPaymentMethod($paymentMethodId)
     {
@@ -85,4 +84,5 @@ class User extends Authenticatable implements MustVerifyEmail
 
         $this->updateDefaultPaymentMethodFromStripe($paymentMethodId);
     }
+    */
 }
