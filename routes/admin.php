@@ -6,6 +6,7 @@ use App\Admin\Controllers\AuthController;
 use App\Admin\Controllers\UserController;
 use App\Admin\Controllers\CategoryController;
 use App\Admin\Controllers\StoreController;
+use App\Admin\Controllers\ReviewController;
 
 use Encore\Admin\Facades\Admin;
 
@@ -29,4 +30,5 @@ Route::group([
   $router->resource('users', UserController::class);
   $router->resource('categories', CategoryController::class);
   $router->resource('stores', StoreController::class);
+  $router->resource('reviews', ReviewController::class);
 });
