@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\WebController;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\WebhookController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -67,3 +68,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('cancel-subscription', 'cancelSubscription')->name('cancel.subscription');
     });
 }); 
+
+Route::post('/stripe/webhook', [WebhookController::class, 'handleStripeWebhook']);
