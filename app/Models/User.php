@@ -64,25 +64,8 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Reservation::class);
     }
 
-    /*
-    public function paymentMethods()
+    public function sales()
     {
-        return $this->hasMany(PaymentMethod::class);
+        return $this->hasMany(Sale::class);
     }
-    
-
-    public function addPaymentMethod($paymentMethodId)
-    {
-        $stripeCustomer = $this->asStripeCustomer();
-
-        $paymentMethod = \Stripe\PaymentMethod::retrieve($paymentMethodId);
-
-        // 支払い方法がまだ顧客にアタッチされていない場合にのみ、アタッチを実行
-        if ($paymentMethod->customer !== $stripeCustomer->id) {
-            $paymentMethod->attach(['customer' => $stripeCustomer->id]);
-        }
-
-        $this->updateDefaultPaymentMethodFromStripe($paymentMethodId);
-    }
-    */
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use App\Models\Sale;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
 use Stripe\Subscription;
@@ -52,6 +53,11 @@ class SubscriptionController extends Controller
             'stripe_status' => 'active',
             'stripe_price' => env('STRIPE.PRICE_ID'),
             'quantity' => 1,
+        ]);
+
+        Sale::create([
+            'user_id' => $user->id,
+            'amount' => 300,
         ]);
         
         return view('checkout.success');

@@ -7,6 +7,7 @@ use App\Admin\Controllers\UserController;
 use App\Admin\Controllers\CategoryController;
 use App\Admin\Controllers\StoreController;
 use App\Admin\Controllers\ReviewController;
+use App\Admin\Controllers\SaleController;
 
 use Encore\Admin\Facades\Admin;
 
@@ -31,4 +32,5 @@ Route::group([
   $router->resource('categories', CategoryController::class);
   $router->resource('stores', StoreController::class);
   $router->resource('reviews', ReviewController::class);
+  $router->resource('sales', SaleController::class)->only('index');
 });
