@@ -22,5 +22,6 @@ Route::group([
     $router->resource('users', UserController::class);
     $router->resource('reviews', ReviewController::class);
     $router->resource('sales', SaleController::class)->only('index');
+    $router->post('stores/import', [StoreController::class, ('csvImport')]);
 
 });

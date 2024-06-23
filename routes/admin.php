@@ -33,4 +33,5 @@ Route::group([
   $router->resource('stores', StoreController::class);
   $router->resource('reviews', ReviewController::class);
   $router->resource('sales', SaleController::class)->only('index');
+  $router->post('stores/import', [StoreController::class, ('csvImport')]);
 });
