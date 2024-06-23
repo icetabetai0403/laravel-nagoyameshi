@@ -16,7 +16,7 @@ class CsvImport extends AbstractTool
             document.getElementById("files").click();
             select.addEventListener('change',function() {
                 var formdata = new FormData();
-                formdata.append( "file", $("input[name='product']").prop("files")[0] );
+                formdata.append( "file", $("input[name='store']").prop("files")[0] );
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -24,7 +24,7 @@ class CsvImport extends AbstractTool
                 });
                 $.ajax({
                     type : "POST",
-                    url : "products/import",
+                    url : "stores/import",
                     data : formdata,
                     processData : false,
                     contentType : false,
