@@ -8,6 +8,12 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use App\Admin\Extensions\Tools\CsvImport;
+use Goodby\CSV\Import\Standard\Lexer;
+use Goodby\CSV\Import\Standard\Interpreter;
+use Goodby\CSV\Import\Standard\LexerConfig;
+use Illuminate\Http\Request;
+
 
 class StoreController extends AdminController
 {
@@ -46,6 +52,10 @@ class StoreController extends AdminController
             $filter->like('description', '店舗説明');
             $filter->between('price', '金額');
             $filter->in('category_id', 'カテゴリー')->multipleSelect(Category::all()->pluck('name', 'id'));
+        });
+
+        $grid->tools(function ($tools) {
+            $tools->append(new CsvImport());
         });
 
         return $grid;
@@ -99,5 +109,47 @@ class StoreController extends AdminController
         $form->select('category_id', __('Category Name'))->options(Category::all()->pluck('name', 'id'));
 
         return $form;
+    }
+
+    public function csvImport(Request $request)
+    {
+        $fle = $request->file('file');
+        $lexer_config = new LexerConfig();
+        $lexer = new Lexer($lexer_config);
+
+        $interpreter = new Interpreter();
+        $interpreter->unstrict();
+
+        $rows = array();
+        $interpreter->addObserver(function (array $row) use (&$rows) {
+            $rows[] = $row;
+        });
+
+        $lexer->parse($file, $interpreter);
+        foreach ($rows as $key => $value) {
+
+            if (count($value) == 11) {
+                Store::create([
+                    'name' => $value[0],
+                    'description' => $value[1],
+                    'image' => $value[2],
+                    'price' => $value[3],
+                    'business_hours' => $value[4],
+                    'postal_code' => $value[5],
+                    'address' => $value[6],
+                    'phone' => $value[7],
+                    'regular_holiday' => $value[8],
+                    'category_id' => $value[9],
+                    'recommend_flag' => $value[10],
+                ]);
+            }
+        }
+
+        return response()->json(
+            ['data' => '成功'],
+            200,
+            [],
+            JSPN_UNESCAPED_UNICODE
+        );
     }
 }
