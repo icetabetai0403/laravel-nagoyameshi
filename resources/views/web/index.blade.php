@@ -9,109 +9,52 @@
     <div class="col-9">
         <h1>おすすめ商品</h1>
         <div class="row">
+        @foreach ($recommend_stores as $recommend_store)
             <div class="col-4">
-                <a href="#">
-                    <img src="{{ asset('img/chestnut.jpg') }}" class="img-thumbnail">
+                <a href="{{ route('stores.show', $recommend_store) }}">
+                    @if ($recommend_store->image !== "")
+                    <img src="{{ asset($recommend_store->image) }}" class="img-thumbnail">
+                    @else
+                    <img src="{{ asset('img/dummy.png')}}" class="img-thumbnail">
+                    @endif
                 </a>
                 <div class="row">
                     <div class="col-12">
                         <p class="nagoyameshi-store-label mt-2">
-                            和栗の詰め合わせ<br>
-                            <label>￥2000</label>
+                            {{ $recommend_store->name }}<br>
+                            <label>￥{{ $recommend_store->price }}</label>
                         </p>
                     </div>
                 </div>
             </div>
-            <div class="col-4">
-                <a href="#">
-                    <img src="{{ asset('img/persimmon.jpg') }}" class="img-thumbnail">
-                </a>
-                <div class="row">
-                    <div class="col-12">
-                        <p class="nagoyameshi-store-label mt-2">
-                            おいしい柿<br>
-                            <label>￥500</label>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-4">
-                <a href="#">
-                    <img src="{{ asset('img/orange.jpg') }}" class="img-thumbnail">
-                </a>
-                <div class="row">
-                    <div class="col-12">
-                        <p class="nagoyameshi-store-label mt-2">
-                            旬なみかん<br>
-                            <label>￥1200</label>
-                        </p>
-                    </div>
-                </div>
-            </div>
+            @endforeach
 
         </div>
 
         <div class="d-flex justify-content-between">
-          <h1>新着店舗</h1>
-          <a href="{{ route('stores.index', ['sort' => 'id', 'direction' => 'desc']) }}">もっと見る</a>
+            <h1>新着店舗</h1>
+            <a href="{{ route('stores.index', ['sort' => 'id', 'direction' => 'desc']) }}">もっと見る</a>
         </div>
         <div class="row">
+            @foreach ($recently_stores as $recently_store)
             <div class="col-3">
-                <a href="#">
-                    <img src="{{ asset('img/robot-vacuum-cleaner.jpg') }}" class="img-thumbnail">
+                <a href="{{ route('stores.show', $recently_store) }}">
+                    @if ($recently_store->image !== "")
+                    <img src="{{ asset($recently_store->image) }}" class="img-thumbnail">
+                    @else
+                    <img src="{{ asset('img/dummy.png') }}" class="img-thumbnail">
+                    @endif
                 </a>
                 <div class="row">
                     <div class="col-12">
                         <p class="nagoyameshi-store-label mt-2">
-                            ロボット掃除機<br>
-                            <label>￥55000</label>
+                            {{ $recently_store->name }}<br>
+                            <label>￥{{ $recently_store->price }}</label>
                         </p>
                     </div>
                 </div>
             </div>
-
-            <div class="col-3">
-                <a href="#">
-                    <img src="{{ asset('img/sofa.jpg') }}" class="img-thumbnail">
-                </a>
-                <div class="row">
-                    <div class="col-12">
-                        <p class="nagoyameshi-store-label mt-2">
-                            3人掛けソファー<br>
-                            <label>￥35000</label>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-3">
-                <a href="#">
-                    <img src="{{ asset('img/cup.jpg') }}" class="img-thumbnail">
-                </a>
-                <div class="row">
-                    <div class="col-12">
-                        <p class="nagoyameshi-store-label mt-2">
-                            コーヒーカップ<br>
-                            <label>￥1000</label>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-3">
-                <a href="#">
-                    <img src="{{ asset('img/cutlery.jpg') }}" class="img-thumbnail">
-                </a>
-                <div class="row">
-                    <div class="col-12">
-                        <p class="nagoyameshi-store-label mt-2">
-                            食器 カトラリーセット1組<br>
-                            <label>￥2000</label>
-                        </p>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </div>

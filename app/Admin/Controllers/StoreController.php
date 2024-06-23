@@ -44,6 +44,7 @@ class StoreController extends AdminController
         $grid->column('phone', __('Phone'));
         $grid->column('regular_holiday', __('Regular holiday'));
         $grid->column('category.name', __('Category Name'));
+        $grid->column('recommend_flag', __('Recommend Flag'));
         $grid->column('created_at', __('Created at'))->sortable();
         $grid->column('updated_at', __('Updated at'))->sortable();
 
@@ -52,6 +53,7 @@ class StoreController extends AdminController
             $filter->like('description', '店舗説明');
             $filter->between('price', '金額');
             $filter->in('category_id', 'カテゴリー')->multipleSelect(Category::all()->pluck('name', 'id'));
+            $filter->equal('recommend_flag', 'おすすめフラグ')->select(['0' => 'false', '1' => 'true']);
         });
 
         $grid->tools(function ($tools) {
@@ -82,6 +84,7 @@ class StoreController extends AdminController
         $show->field('phone', __('Phone'));
         $show->field('regular_holiday', __('Regular holiday'));
         $show->field('category.name', __('Category Name'));
+        $show->field('recommend_flag', __('Recommend Flag'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
 
@@ -107,13 +110,14 @@ class StoreController extends AdminController
         $form->text('phone', __('Phone'));
         $form->text('regular_holiday', __('Regular holiday'));
         $form->select('category_id', __('Category Name'))->options(Category::all()->pluck('name', 'id'));
+        $form->switch('recommend_flag', __('Recommend Flag'));
 
         return $form;
     }
 
     public function csvImport(Request $request)
     {
-        $fle = $request->file('file');
+        $file = $request->file('file');
         $lexer_config = new LexerConfig();
         $lexer = new Lexer($lexer_config);
 
@@ -149,7 +153,7 @@ class StoreController extends AdminController
             ['data' => '成功'],
             200,
             [],
-            JSPN_UNESCAPED_UNICODE
+            JSON_UNESCAPED_UNICODE
         );
     }
 }
