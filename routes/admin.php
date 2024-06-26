@@ -8,6 +8,7 @@ use App\Admin\Controllers\CategoryController;
 use App\Admin\Controllers\StoreController;
 use App\Admin\Controllers\ReviewController;
 use App\Admin\Controllers\SaleController;
+use App\Admin\Controllers\AdminUserController;
 
 use Encore\Admin\Facades\Admin;
 
@@ -33,5 +34,6 @@ Route::group([
   $router->resource('stores', StoreController::class);
   $router->resource('reviews', ReviewController::class);
   $router->resource('sales', SaleController::class)->only('index');
+  $router->resource('auth/users', AdminUserController::class);
   $router->post('stores/import', [StoreController::class, 'csvImport']);
 });
