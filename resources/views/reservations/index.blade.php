@@ -14,6 +14,11 @@
     </thead>
     <tbody>
         @foreach ($reservations as $reservation)
+        @php
+            $reservationTime = \Carbon\Carbon::parse($reservation->reservation_date . ' ' . $reservation->reservation_time);
+            $now = \Carbon\Carbon::now();
+            $isFutureReservation = $reservationTime > $now;
+        @endphp
         <tr>
             <td>
                 <a href="{{ route('stores.show', $reservation->store->id) }}">
@@ -26,15 +31,17 @@
             </td>
             <td><p class="h3">{{ $reservation->store->name }}</p></td>
             <td>{{ $reservation->reservation_date }}</td>
-            <td>{{ $reservation->reservation_time }}</td>
+            <td>{{ $reservation->formatted_reservation_time }}</td>
             <td>{{ $reservation->reservation_people_number }}名</td>
             <td>
-                <form action="{{ route('reservations.destroy', $reservation->id) }}" method="POST">
-                    <a href="{{ route('reservations.show',$reservation->id) }}" class="btn btn-primary">予約詳細</a>
-                    <a href="{{ route('reservations.edit',$reservation->id) }}" class="btn btn-success">予約変更</a>
+                <a href="{{ route('reservations.show',$reservation->id) }}" class="btn btn-primary">予約詳細</a>
+                @if ($isFutureReservation)
+                <a href="{{ route('reservations.edit',$reservation->id) }}" class="btn btn-success">予約変更</a>
+                <form action="{{ route('reservations.destroy', $reservation->id) }}" method="POST" style="display:inline;">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger">キャンセル</button>
+                    @endif
                 </form>
             </td>
         </tr>

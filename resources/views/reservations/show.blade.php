@@ -15,7 +15,7 @@
 
 <div>
     <strong>予約時間:</strong>
-    {{ $reservation->reservation_time }}
+    {{ $reservation->formatted_reservation_time }}
 </div>
 
 <div>
