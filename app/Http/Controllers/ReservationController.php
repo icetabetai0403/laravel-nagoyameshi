@@ -17,7 +17,7 @@ class ReservationController extends Controller
     {
         $user_id = Auth::id();
 
-        $reservations = Reservation::where('user_id', $user_id)->get();
+        $reservations = Reservation::where('user_id', $user_id)->orderBy('reservation_date', 'desc')->orderBy('reservation_time', 'desc')->get();
 
         return view('reservations.index', compact('reservations'));
     }
@@ -29,7 +29,19 @@ class ReservationController extends Controller
      */
     public function create($store_id)
     {
-        return view('reservations.create', compact('store_id'));
+        $dates = collect(range(1, 21))->map(function ($day) {
+            return now()->addDays($day)->format('Y-m-d');
+        });
+
+        $times = collect(range(10, 22))->flatMap(function ($hour) {
+            return [
+                sprintf('%02d:00', $hour),
+            ];
+        });
+
+        $peopleNumbers = range(1, 30);
+        
+        return view('reservations.create', compact('store_id', 'dates', 'times', 'peopleNumbers'));
     }
 
     /**
@@ -72,7 +84,19 @@ class ReservationController extends Controller
     {
         $store_id = $reservation->store_id;
 
-        return view('reservations.edit', compact('reservation', 'store_id'));
+        $dates = collect(range(1, 21))->map(function ($day) {
+            return now()->addDays($day)->format('Y-m-d');
+        });
+
+        $times = collect(range(10, 22))->flatMap(function ($hour) {
+            return [
+                sprintf('%02d:00', $hour),
+            ];
+        });
+
+        $peopleNumbers = range(1, 30);
+
+        return view('reservations.edit', compact('reservation', 'store_id', 'dates', 'times', 'peopleNumbers'));
     }
 
     /**
