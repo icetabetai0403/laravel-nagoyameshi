@@ -7,7 +7,7 @@
         @endcomponent
     </div>
     <div class="col-9">
-        <h1>おすすめ商品</h1>
+        <h1>おすすめ店舗</h1>
         <div class="row">
         @foreach ($recommend_stores as $recommend_store)
             <div class="col-4">
@@ -22,6 +22,10 @@
                     <div class="col-12">
                         <p class="nagoyameshi-store-label mt-2">
                             {{ $recommend_store->name }}<br>
+                            @if ($recommend_store->reviews()->exists())
+                                <span class="nagoyameshi-star-rating" data-rate="{{ round($recommend_store->reviews->avg('score') * 2) / 2 }}"></span>
+                                {{ round($recommend_store->reviews->avg('score'), 1) }}<br>
+                            @endif
                             <label>￥{{ $recommend_store->price }}</label>
                         </p>
                     </div>
@@ -49,6 +53,10 @@
                     <div class="col-12">
                         <p class="nagoyameshi-store-label mt-2">
                             {{ $recently_store->name }}<br>
+                            @if ($recently_store->reviews()->exists())
+                                <span class="nagoyameshi-star-rating" data-rate="{{ round($recently_store->reviews->avg('score') * 2) / 2 }}"></span>
+                                {{ round($recently_store->reviews->avg('score'), 1) }}<br>
+                            @endif
                             <label>￥{{ $recently_store->price }}</label>
                         </p>
                     </div>

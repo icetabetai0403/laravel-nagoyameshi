@@ -36,6 +36,10 @@
                         <div class="col-12">
                             <p class="nagoyameshi-store-label mt-2">
                                 {{$store->name}}<br>
+                                @if ($store->reviews()->exists())
+                                    <span class="nagoyameshi-star-rating" data-rate="{{ round($store->reviews->avg('score') * 2) / 2 }}"></span>
+                                    {{ round($store->reviews->avg('score'), 1) }}<br>
+                                @endif
                                 <label>￥{{$store->price}}</label>
                             </p>
                         </div>

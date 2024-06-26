@@ -16,6 +16,12 @@
                 <h1 class="">
                     {{$store->name}}
                 </h1>
+                @if ($store->reviews()->exists())
+                    <p>
+                        <span class="nagoyameshi-star-rating" data-rate="{{ round($store->reviews->avg('score') * 2) / 2 }}"></span>
+                        {{ round($store->reviews->avg('score'), 1) }}
+                    </p>
+                @endif
                 <p class="">
                     {{$store->description}}
                 </p>
@@ -65,6 +71,12 @@
         <div class="offset-1 col-11">
             <hr class="w-100">
             <h3 class="float-left">カスタマーレビュー</h3>
+            @if ($store->reviews()->exists())
+                <p>
+                    <span class="nagoyameshi-star-rating" data-rate="{{ round($store->reviews->avg('score') * 2) / 2 }}"></span>
+                    {{ round($store->reviews->avg('score'), 1) }}
+                </p>
+            @endif
         </div>
 
         <div class="offset-1 col-10">
