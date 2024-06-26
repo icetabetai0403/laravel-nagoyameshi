@@ -31,7 +31,7 @@
                 </p>
                 <hr>
             </div>
-            @auth
+            @if (Auth::user()->paid_membership_flag == true)
             <form method="POST" class="m-3 align-items-end">
                 @csrf
                 <input type="hidden" name="id" value="{{$store->id}}">
@@ -65,7 +65,7 @@
             <form id="favorites-store-form" action="{{ route('favorites.store', $store->id) }}" method="POST" class="d-none">
                 @csrf
             </form>
-            @endauth
+            @endif
         </div>
 
         <div class="offset-1 col-11">
@@ -91,7 +91,7 @@
                 @endforeach
             </div><br />
 
-            @auth
+            @if (Auth::user()->paid_membership_flag == true)
             <div class="row">
                 <div class="offset-md-5 col-md-5">
                     <form method="POST" action="{{ route('reviews.store') }}">
@@ -119,7 +119,7 @@
                     </form>
                 </div>
             </div>
-            @endauth
+            @endif
         </div>
     </div>
 </div>
