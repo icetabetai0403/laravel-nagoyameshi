@@ -24,24 +24,19 @@
                     <li class="nav-item mr-5">
                         <a class="nav-link" href="{{ route('login') }}">ログイン</a>
                     </li>
-                    <hr>
-                    <li class="nav-item mr-5">
-                        <a class="nav-link" href="{{ route('login') }}"><i class="far fa-heart"></i></a>
-                    </li>
-                    <li class="nav-item mr-5">
-                        <a class="nav-link" href="{{ route('login') }}"><i class="fas fa-shopping-cart"></i></a>
-                    </li>
                 @else
                 <li class="nav-item mr-5">
                     <a class="nav-link" href="{{ route('mypage') }}">
                         <i class="fas fa-user mr-1"></i><label>マイページ</label>
                     </a>
                 </li>
+                @if (Auth::user()->paid_membership_flag == true)
                 <li class="nav-item mr-5">
                     <a class="nav-link" href="{{ route('mypage.favorite') }}">
                         <i class="far fa-heart"></i>
                     </a>
                 </li>
+                @endif
                 @endguest
             </ul>
         </div>

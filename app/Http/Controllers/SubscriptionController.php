@@ -55,6 +55,8 @@ class SubscriptionController extends Controller
             'quantity' => 1,
         ]);
 
+        $user->update(['paid_membership_flag' => true]);
+
         Sale::create([
             'user_id' => $user->id,
             'amount' => 300,
@@ -132,6 +134,8 @@ class SubscriptionController extends Controller
                     return back()->withErrors(['error' => 'サブスクリプションのキャンセルに失敗しました。']);
                 }
             }
+            // paid_membership_flagを0に更新
+            $user->update(['paid_membership_flag' => false]);
         }
 
         return redirect()->route('mypage')->with('success', 'サブスクリプションをキャンセルしました。');

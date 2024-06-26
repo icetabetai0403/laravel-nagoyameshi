@@ -23,6 +23,10 @@ class UserController extends AdminController
         $grid->column('postal_code', __('Postal code'));
         $grid->column('address', __('Address'));
         $grid->column('phone', __('Phone'));
+        $grid->column('paid_membership_flag', __('Paid Membership'))
+        ->display(function($value) {
+            return $value == 1 ? '有料会員' : '無料会員';
+        });
         $grid->column('created_at', __('Created at'))->sortable();
         $grid->column('updated_at', __('Updated at'))->sortable();
         $grid->column('deleted_at', __('Deleted at'))->sortable();
@@ -35,6 +39,10 @@ class UserController extends AdminController
             $filter->like('phone', '電話番号');
             $filter->between('created_at', '登録日')->datetime();
             $filter->scope('trashed', 'Soft deleted data')->onlyTrashed();
+            $filter->equal('paid_membership_flag', '会員種別')->select([
+                0 => '無料会員',
+                1 => '有料会員'
+            ]);
         });
 
         return $grid;
@@ -51,6 +59,10 @@ class UserController extends AdminController
         $show->field('postal_code', __('Postal code'));
         $show->field('address', __('Address'));
         $show->field('phone', __('Phone'));
+        $show->field('paid_membership_flag', __('Paid Membership'))
+        ->as(function($value) {
+            return $value == 1 ? '有料会員' : '無料会員';
+        });
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
         $show->field('deleted_at', __('Deleted at'));
@@ -68,8 +80,9 @@ class UserController extends AdminController
         $form->password('password', __('Password'));
         $form->text('postal_code', __('Postal code'));
         $form->textarea('address', __('Address'));
-        $form->mobile('phone', __('Phone'));
+        $form->text('phone', __('Phone'));
         $form->datetime('deleted_at', __('Deleted at'))->default(NULL);
+        $form->ignore(['paid_membership_flag']);
 
         $form->saving(function (Form $form) {
             if ($form->password && $form->model()->password != $form->password) {
