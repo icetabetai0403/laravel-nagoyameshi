@@ -3,6 +3,19 @@
 @section('content')
 <div class="container d-flex justify-content-center mt-3">
     <div class="w-50">
+
+        @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
         <h1>マイページ</h1>
 
         <hr>

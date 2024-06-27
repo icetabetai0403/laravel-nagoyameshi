@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Models\User;
 use App\Models\Sale;
+use App\Models\Subscription as UserSubscription;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
-use Stripe\Subscription;
+use Stripe\Subscription as StripeSubscription;
 
 class SubscriptionController extends Controller
 {
@@ -47,7 +49,8 @@ class SubscriptionController extends Controller
 
         // サブスクリプションの詳細をデータベースに保存
         $user = Auth::user();
-        $user->subscriptions()->create([
+        UserSubscription::create([
+            'user_id' => $user->id,
             'stripe_id' => $subscriptionId,
             'name' => $user->name,
             'stripe_status' => 'active',
@@ -62,7 +65,7 @@ class SubscriptionController extends Controller
             'amount' => 300,
         ]);
         
-        return view('checkout.success');
+        return redirect()->route('mypage')->with('success', 'サブスクリプションの登録が完了しました。');
     }
 
     public function changeCard()
@@ -110,34 +113,44 @@ class SubscriptionController extends Controller
             }
         }
 
-        return view('change-card.success');
+        return redirect()->route('mypage')->with('success', 'カード情報の更新が完了しました。');
     }
 
     public function cancelSubscription()
     {
         $user = Auth::user();
 
-        $subscriptions = $user->subscriptions;
+        Log::info('Cancellation started', ['user_id' => $user->id, 'paid_membership_flag' => $user->paid_membership_flag]);
 
-        if ($subscriptions->isNotEmpty()) {
-            foreach ($subscriptions as $subscription) {
-                try {
-                    \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+        $activeSubscriptions = $user->subscriptions()->where('stripe_status', '!=', 'canceled')->get();
 
-                    $stripeSubscription = \Stripe\Subscription::retrieve($subscription->stripe_id);
-                    $stripeSubscription->cancel();
+        Log::info('Active subscriptions', ['count' => $activeSubscriptions->count()]);
 
-                    // サブスクリプションの状態を更新
-                    $subscription->update(['stripe_status' => 'canceled']);
-                } catch (\Exception $e) {
-                    // エラーハンドリング
-                    return back()->withErrors(['error' => 'サブスクリプションのキャンセルに失敗しました。']);
-                }
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        foreach ($activeSubscriptions as $subscription) {
+            try {
+                $stripeSubscription = StripeSubscription::retrieve($subscription->stripe_id);
+                $stripeSubscription->cancel();
+
+                $subscription->update(['stripe_status' => 'canceled']);
+                Log::info('Subscription canceled', ['stripe_id' => $subscription->stripe_id]);
+            } catch (\Exception $e) {
+                Log::error('Subscription cancellation failed', ['error' => $e->getMessage(), 'stripe_id' => $subscription->stripe_id]);
+                return back()->withErrors(['error' => 'サブスクリプションのキャンセルに失敗しました。']);
             }
-            // paid_membership_flagを0に更新
+        }
+
+        // アクティブなサブスクリプションが残っているかチェック
+        $remainingActiveSubscriptions = $user->subscriptions()->where('stripe_status', '!=', 'canceled')->count();
+        
+        if ($remainingActiveSubscriptions == 0) {
             $user->update(['paid_membership_flag' => false]);
+            Log::info('All subscriptions canceled, flag updated', ['user_id' => $user->id, 'paid_membership_flag' => false]);
+        } else {
+            Log::info('Some subscriptions still active', ['user_id' => $user->id, 'active_count' => $remainingActiveSubscriptions]);
         }
 
         return redirect()->route('mypage')->with('success', 'サブスクリプションをキャンセルしました。');
-    }   
+    }  
 }
