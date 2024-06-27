@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Cashier\Billable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Subscription;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -68,5 +69,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sales()
     {
         return $this->hasMany(Sale::class);
+    }
+
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class);
     }
 }

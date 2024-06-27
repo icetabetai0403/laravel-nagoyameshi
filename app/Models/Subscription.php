@@ -5,14 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PaymentMethod extends Model
+class Subscription extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'user_id',
-        'payment_method_id',
-        'default',
+        'name',
+        'stripe_id',
+        'stripe_status',
+        'stripe_price',
+        'quantity',
+        'trial_ends_at',
+        'ends_at'
+    ];
+
+    protected $dates = [
+        'trial_ends_at',
+        'ends_at'
     ];
 
     public function user()
