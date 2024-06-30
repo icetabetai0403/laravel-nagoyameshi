@@ -5,7 +5,7 @@
         </a>
         <form action="{{ route('stores.index') }}" method="GET" class="row g-1">
             <div class="col-auto">
-                <input class="form-control nagoyameshi-header-search-input" name="keyword">
+                <input class="form-control nagoyameshi-header-search-input" name="keyword" placeholder="店舗名から探す">
             </div>
             <div class="col-auto">
                 <button type="submit" class="btn nagoyameshi-header-search-button"><i class="fas fa-search nagoyameshi-header-search-icon"></i></button>
@@ -33,7 +33,7 @@
                 @if (Auth::user()->paid_membership_flag == true)
                 <li class="nav-item mr-5">
                     <a class="nav-link" href="{{ route('mypage.favorite') }}">
-                        <i class="far fa-heart"></i>
+                        <i class="far fa-heart"></i><label>お気に入り</label>
                     </a>
                 </li>
                 @endif

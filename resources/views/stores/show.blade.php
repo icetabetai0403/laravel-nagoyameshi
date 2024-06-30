@@ -1,124 +1,154 @@
 @extends('layouts.app')
 
 @section('content')
-
-<div class="d-flex justify-content-center">
-    <div class="row w-75">
-        <div class="col-5 offset-1">
-        @if ($store->image)
-            <img src="{{ asset($store->image) }}" class="w-100 img-fluid">
-            @else
-            <img src="{{ asset('img/dummy.png')}}" class="w-100 img-fluid">
-            @endif
-        </div>
-        <div class="col">
-            <div class="d-flex flex-column">
-                <h1 class="">
-                    {{$store->name}}
-                </h1>
-                @if ($store->reviews()->exists())
-                    <p>
-                        <span class="nagoyameshi-star-rating" data-rate="{{ round($store->reviews->avg('score') * 2) / 2 }}"></span>
-                        {{ round($store->reviews->avg('score'), 1) }}
-                    </p>
-                @endif
-                <p class="">
-                    {{$store->description}}
-                </p>
-                <hr>
-                <p class="d-flex align-items-end">
-                    ￥{{$store->price}}(税込)
-                </p>
-                <hr>
-            </div>
-            @if (Auth::user()->paid_membership_flag == true)
-            <form method="POST" class="m-3 align-items-end">
-                @csrf
-                <input type="hidden" name="id" value="{{$store->id}}">
-                <input type="hidden" name="name" value="{{$store->name}}">
-                <input type="hidden" name="price" value="{{$store->price}}">
-                <input type="hidden" name="weight" value="0">
-                <div class="row">
-
-                    <div class="col-5">
-                    @if(Auth::user()->favorite_stores()->where('store_id', $store->id)->exists())
-                        <a href="{{ route('favorites.destroy', $store->id) }}" class="btn nagoyameshi-favorite-button text-favorite w-100" onclick="event.preventDefault(); document.getElementById('favorites-destroy-form').submit();">
-                            <i class="fa fa-heart"></i>
-                            お気に入り解除
-                        </a>
-                    @else
-                        <a href="{{ route('favorites.store', $store->id) }}" class="btn nagoyameshi-favorite-button text-favorite w-100" onclick="event.preventDefault(); document.getElementById('favorites-store-form').submit();">
-                            <i class="fa fa-heart"></i>
-                            お気に入り
-                        </a>
-                    @endif
-                    </div>
-                </div>
-            </form>
-            <div class="col-7">
-                        <a href="{{ route('reservations.create', ['store_id' => $store->id]) }}" class="nagoyameshi-favorite-reservation"><i class="fas fa-shopping-cart"></i>予約</a>
-                    </div>
-            <form id="favorites-destroy-form" action="{{ route('favorites.destroy', $store->id) }}" method="POST" class="d-none">
-                @csrf
-                @method('DELETE')
-            </form>
-            <form id="favorites-store-form" action="{{ route('favorites.store', $store->id) }}" method="POST" class="d-none">
-                @csrf
-            </form>
-            @endif
-        </div>
-
-        <div class="offset-1 col-11">
-            <hr class="w-100">
-            <h3 class="float-left">カスタマーレビュー</h3>
+<div class="container">
+    <!-- 店舗名と平均評価 -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="mb-3">{{$store->name}}</h1>
             @if ($store->reviews()->exists())
-                <p>
+                <div class="store-rating">
                     <span class="nagoyameshi-star-rating" data-rate="{{ round($store->reviews->avg('score') * 2) / 2 }}"></span>
-                    {{ round($store->reviews->avg('score'), 1) }}
-                </p>
+                    <span class="ml-2">{{ round($store->reviews->avg('score'), 1) }}</span>
+                </div>
             @endif
         </div>
+    </div>
 
-        <div class="offset-1 col-10">
-        <div class="row">
-                @foreach($reviews as $review)
-                <div class="offset-md-5 col-md-5">
-                    <h3 class="review-score-color">{{ str_repeat('★', $review->score) }}</h3>
-                    <p class="h3">{{ $review->title }}</p>
-                    <p class="h3">{{$review->content}}</p>
-                    <label>{{$review->created_at}} {{$review->user->name}}</label>
-                </div>
-                @endforeach
-            </div><br />
+    <!-- 店舗情報 -->
+    <div class="row mb-5">
+        <div class="col-md-5">
+            <div class="store-image mb-3">
+                @if ($store->image)
+                    <img src="{{ asset($store->image) }}" class="img-fluid rounded">
+                @else
+                    <img src="{{ asset('img/dummy.png')}}" class="img-fluid rounded">
+                @endif
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="store-description mb-4">
+                <h3 class="mb-2">店舗説明</h3>
+                <p>{{$store->description}}</p>
+            </div>
+
+            <div class="store-details mb-4">
+                <h3 class="mb-2">店舗詳細</h3>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>価格</th>
+                        <td>￥{{$store->price}}(税込)</td>
+                    </tr>
+                    <tr>
+                        <th>営業時間</th>
+                        <td>{{ $store->business_hours }}</td>
+                    </tr>
+                    <tr>
+                        <th>定休日</th>
+                        <td>{{ $store->regular_holiday }}</td>
+                    </tr>
+                    <tr>
+                        <th>住所</th>
+                        <td>〒{{$store->postal_code}}　{{ $store->address }}</td>
+                    </tr>
+                    <tr>
+                        <th>電話番号</th>
+                        <td>{{ $store->phone }}</td>
+                    </tr>
+                </table>
+            </div>
 
             @if (Auth::user()->paid_membership_flag == true)
-            <div class="row">
-                <div class="offset-md-5 col-md-5">
+                <div class="store-actions">
+                    <div class="row">
+                        <div class="col-6">
+                            @if(Auth::user()->favorite_stores()->where('store_id', $store->id)->exists())
+                                <form id="favorites-destroy-form" action="{{ route('favorites.destroy', $store->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn nagoyameshi-favorite-button text-favorite w-100">
+                                        <i class="fa fa-heart"></i> お気に入り解除
+                                    </button>
+                                </form>
+                            @else
+                                <form id="favorites-store-form" action="{{ route('favorites.store', $store->id) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn nagoyameshi-favorite-button text-favorite w-100">
+                                        <i class="fa fa-heart"></i> お気に入り
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
+                        <div class="col-6">
+                            <a href="{{ route('reservations.create', ['store_id' => $store->id]) }}" class="btn nagoyameshi-favorite-reservation text-reservation w-100">
+                                <i class="fas fa-shopping-cart"></i> 予約
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @endif
+        </div>
+    </div>
+
+    <hr class="mb-5">
+
+    <!-- レビュー -->
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">カスタマーレビュー</h2>
+        </div>
+        
+        <!-- レビュー一覧 -->
+        <div class="col-md-7">
+            <div class="reviews">
+                @foreach($reviews as $review)
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h4 class="review-score-color mb-2">{{ str_repeat('★', $review->score) }}</h4>
+                            <h5 class="card-title">{{ $review->title }}</h5>
+                            <p class="card-text">{{$review->content}}</p>
+                            <small class="text-muted">{{$review->created_at->format('Y-m-d')}} {{$review->user->name}}</small>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        <!-- レビュー投稿フォーム -->
+        <div class="col-md-5">
+            @if (Auth::user()->paid_membership_flag == true)
+                <div class="review-form mb-4">
+                    <h4 class="mb-3">レビューを投稿</h4>
                     <form method="POST" action="{{ route('reviews.store') }}">
                         @csrf
-                        <h4>評価</h4>
-                            <select name="score" class="form-control m-2 review-score-color">
-                                <option value="5" class="review-score-color">★★★★★</option>
-                                <option value="4" class="review-score-color">★★★★</option>
-                                <option value="3" class="review-score-color">★★★</option>
-                                <option value="2" class="review-score-color">★★</option>
-                                <option value="1" class="review-score-color">★</option>
+                        <div class="form-group mb-3">
+                            <label for="score" class="mb-2">評価</label>
+                            <select name="score" id="score" class="form-control review-score-color">
+                                <option value="5">★★★★★</option>
+                                <option value="4">★★★★</option>
+                                <option value="3">★★★</option>
+                                <option value="2">★★</option>
+                                <option value="1">★</option>
                             </select>
-                        <h4>タイトル</h4>
-                        @error('title')
-                            <strong>タイトルを入力してください</strong>
-                        @enderror
-                        <input type="text" name="title" class="form-control m-2">
-                        <h4>レビュー内容</h4>
-                        @error('content')
-                            <strong>レビュー内容を入力してください</strong>
-                        @enderror
-                        <textarea name="content" class="form-control m-2"></textarea>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="title" class="mb-2">タイトル</label>
+                            @error('title')
+                                <span class="text-danger">タイトルを入力してください</span>
+                            @enderror
+                            <input type="text" name="title" id="title" class="form-control">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="content" class="mb-2">レビュー内容</label>
+                            @error('content')
+                                <span class="text-danger">レビュー内容を入力してください</span>
+                            @enderror
+                            <textarea name="content" id="content" class="form-control" rows="4"></textarea>
+                        </div>
                         <input type="hidden" name="store_id" value="{{$store->id}}">
-                        <button type="submit" class="btn nagoyameshi-submit-button ml-2">レビューを追加</button>
+                        <button type="submit" class="btn nagoyameshi-submit-button">レビューを追加</button>
                     </form>
                 </div>
-            </div>
             @endif
         </div>
     </div>
