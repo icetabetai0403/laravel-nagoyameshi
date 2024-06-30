@@ -39,7 +39,7 @@ class StoreController extends AdminController
         $grid->column('image', __('Image'))->image();
         $grid->column('price', __('Price'))->sortable();
         $grid->column('business_hours', __('Business hours'));
-        $grid->column('postal-code', __('Postal code'));
+        $grid->column('postal_code', __('Postal code'));
         $grid->column('address', __('Address'));
         $grid->column('phone', __('Phone'));
         $grid->column('regular_holiday', __('Regular holiday'));
@@ -79,7 +79,7 @@ class StoreController extends AdminController
         $show->field('image', __('Image'))->image();
         $show->field('price', __('Price'));
         $show->field('business_hours', __('Business hours'));
-        $show->field('postal-code', __('Postal code'));
+        $show->field('postal_code', __('Postal code'));
         $show->field('address', __('Address'));
         $show->field('phone', __('Phone'));
         $show->field('regular_holiday', __('Regular holiday'));
@@ -105,7 +105,7 @@ class StoreController extends AdminController
         $form->image('image', __('Image'));
         $form->text('price', __('Price'));
         $form->text('business_hours', __('Business hours'));
-        $form->text('postal-code', __('Postal code'));
+        $form->text('postal_code', __('Postal code'));
         $form->textarea('address', __('Address'));
         $form->text('phone', __('Phone'));
         $form->text('regular_holiday', __('Regular holiday'));
