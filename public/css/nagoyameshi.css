@@ -1,4 +1,4 @@
-body {
+rbody {
     background-color: #f8fafc;
     font-family: "メイリオ", "Meiryo", "Hiragino Kaku Gothic ProN",
         "ヒラギノ角ゴ ProN W3", sans-serif;
@@ -104,7 +104,13 @@ label {
     line-height: normal;
     letter-spacing: normal;
     color: #ffffff;
-    background-color: #0fbe9f;
+    background-color: #c44646;
+}
+
+.nagoyameshi-submit-button:hover {
+    color: #ffffff;
+    background-color: #c44646;
+    opacity: 0.7;
 }
 
 .nagoyameshi-login-text {
@@ -114,7 +120,7 @@ label {
     font-style: normal;
     line-height: normal;
     letter-spacing: normal;
-    color: #0fbe9f;
+    color: #c44646;
 }
 
 .nagoyameshi-header-container {
@@ -127,7 +133,13 @@ label {
 }
 
 .nagoyameshi-header-search-button {
-    background-color: #0fbe9f;
+    background-color: #c44646;
+    margin-left: 10px;
+}
+
+.nagoyameshi-header-search-button:hover {
+    background-color: #c44646;
+    opacity: 0.7;
 }
 
 .nagoyameshi-header-search-icon {
@@ -138,26 +150,32 @@ label {
     color: #191919;
 }
 
-.nagoyameshi-header-shoppingcart-icon {
+.nagoyameshi-favorite-button,
+.nagoyameshi-favorite-reservation {
+    border-radius: 7px;
+    font-weight: bold;
+    background-color: #c44646;
+    width: auto;
+}
+
+.nagoyameshi-favorite-button:hover,
+.nagoyameshi-favorite-reservation:hover {
+    background-color: #c44646;
+    opacity: 0.7;
     color: #ffffff;
 }
 
-.nagoyameshi-favorite-button {
-    border-radius: 2px;
-    border: solid 1px #0fbe9f;
-    background-color: #ffffff;
-}
-
-.text-favorite {
-    color: #0fbe9f;
+.text-favorite,
+.text-reservation {
+    color: #ffffff;
 }
 
 .review-score-color {
-    color: #0fbe9f;
+    color: #c44646;
 }
 
 .review-score-color:focus {
-    color: #0fbe9f;
+    color: #c44646;
 }
 
 .nagoyameshi-sidebar-category-label {
@@ -170,12 +188,6 @@ label {
     line-height: normal;
     letter-spacing: normal;
     color: #191919;
-}
-
-.nagoyameshi-favorite-reservation {
-    border-radius: 2px;
-    color: #ffffff;
-    background-color: #0fbe9f;
 }
 
 .nagoyameshi-delete-submit-button {
@@ -204,7 +216,7 @@ label {
     left: 0;
     z-index: 1;
     overflow: hidden;
-    color: #0fbe9f;
+    color: #c44646;
     white-space: nowrap;
 }
 
@@ -250,4 +262,185 @@ label {
 
 .nagoyameshi-star-rating[data-rate="0"]::after {
     width: 0%;
+}
+
+.store-image img {
+    max-height: 300px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.store-rating {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.store-rating .nagoyameshi-star-rating {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.reviews {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.review-form {
+    background-color: #f8f9fa;
+    padding: 25px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.review-form .form-group {
+    margin-bottom: 20px;
+}
+
+.review-form label {
+    font-weight: bold;
+}
+
+.card {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 14px;
+}
+
+.text-muted {
+    font-size: 12px;
+}
+
+hr {
+    border-top: 2px solid #9c9c9c;
+}
+
+.store-details th {
+    width: 30%;
+    background-color: #e3d1d1; /* #C44646の明度を上げたカラー */
+    color: black; /* テキストを白色に保持 */
+}
+
+.store-details td {
+    background-color: #ffffff; /* セルの背景を白に設定 */
+}
+
+.table-bordered {
+    border: 1px solid #dee2e6;
+}
+
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid #dee2e6;
+}
+
+.sidebar-categories {
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.sidebar-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.category-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.category-item {
+    margin-bottom: 5px;
+}
+
+.category-link {
+    display: block;
+    padding: 5px;
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.category-link:hover {
+    background-color: #f0f0f0;
+    color: rgb(110, 110, 110);
+    text-decoration: none;
+}
+
+.fa-user,
+.fa-heart {
+    margin-right: 7px;
+}
+
+.nagoyameshi-require-input-label {
+    border-radius: 5px;
+    background-color: #e2001b;
+    padding: 2px 5px;
+    margin-left: 8px;
+}
+
+.login-container {
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    padding: 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nagoyameshi-login-input {
+    margin-bottom: 15px;
+}
+
+.nagoyameshi-submit-button {
+    margin-top: 10px;
+}
+
+.recommend-store-image {
+    width: 100%;
+    height: 280px; /* おすすめ店舗の画像の高さ */
+    object-fit: cover;
+}
+
+.new-store-image {
+    width: 100%;
+    height: 200px; /* 新着店舗の画像の高さ */
+    object-fit: cover;
+}
+
+.store-link:hover img {
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.nagoyameshi-store-label-link {
+    margin-bottom: 0;
+}
+
+.container-fluid {
+    overflow-x: hidden;
+}
+
+.store-image {
+    width: 100%;
+    height: 200px; /* 適切な高さに調整してください */
+    object-fit: cover;
+}
+
+.store-link:hover img {
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.nagoyameshi-store-label {
+    margin-bottom: 20px; /* 商品間の余白を確保 */
 }
