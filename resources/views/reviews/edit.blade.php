@@ -1,36 +1,47 @@
 @extends('layouts.app')
 
 @section('content')
-<div>
-    <h2>レビュー編集</h2>
-</div>
-<div>
-    <a href="{{ route('reviews.index') }}"> Back</a>
-</div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="mb-4">レビュー編集</h2>
+            <a href="{{ route('reviews.index') }}" class="mb-4 d-inline-block">戻る</a>
 
-<form action="{{ route('reviews.update',$review->id) }}" method="POST">
-    @csrf
-    @method('PUT')
+            <form action="{{ route('reviews.update',$review->id) }}" method="POST">
+                @csrf
+                @method('PUT')
 
-    <h4>評価</h4>
-        <select name="score" class="form-control m-2 review-score-color">
-            <option value="5" class="review-score-color" {{ $review->score == 5 ? 'selected' : '' }}>★★★★★</option>
-            <option value="4" class="review-score-color" {{ $review->score == 4 ? 'selected' : '' }}>★★★★</option>
-            <option value="3" class="review-score-color" {{ $review->score == 3 ? 'selected' : '' }}>★★★</option>
-            <option value="2" class="review-score-color" {{ $review->score == 2 ? 'selected' : '' }}>★★</option>
-            <option value="1" class="review-score-color" {{ $review->score == 1 ? 'selected' : '' }}>★</option>
-        </select>
-    <h4>タイトル</h4>
-        @error('title')
-            <strong>タイトルを入力してください</strong>
-        @enderror
-    <input type="text" name="title" class="form-control m-2" value="{{ old('title', $review->title) }}">
-    <h4>レビュー内容</h4>
-        @error('content')
-            <strong>レビュー内容を入力してください</strong>
-        @enderror
-    <textarea name="content" class="form-control m-2">{{ old('content', $review->content) }}</textarea>
-    <input type="hidden" name="store_id" value="{{ $review->store_id }}">
-    <button type="submit" class="btn nagoyameshi-submit-button ml-2">レビューを修正</button>
-</form>
+                <div class="mb-4">
+                    <h4>評価</h4>
+                    <select name="score" class="form-select review-score-color">
+                        <option value="5" class="review-score-color" {{ $review->score == 5 ? 'selected' : '' }}>★★★★★</option>
+                        <option value="4" class="review-score-color" {{ $review->score == 4 ? 'selected' : '' }}>★★★★</option>
+                        <option value="3" class="review-score-color" {{ $review->score == 3 ? 'selected' : '' }}>★★★</option>
+                        <option value="2" class="review-score-color" {{ $review->score == 2 ? 'selected' : '' }}>★★</option>
+                        <option value="1" class="review-score-color" {{ $review->score == 1 ? 'selected' : '' }}>★</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <h4>タイトル</h4>
+                    @error('title')
+                        <span class="text-danger">タイトルを入力してください</span>
+                    @enderror
+                    <input type="text" name="title" class="form-control" value="{{ old('title', $review->title) }}">
+                </div>
+
+                <div class="mb-4">
+                    <h4>レビュー内容</h4>
+                    @error('content')
+                        <span class="text-danger">レビュー内容を入力してください</span>
+                    @enderror
+                    <textarea name="content" class="form-control" rows="5">{{ old('content', $review->content) }}</textarea>
+                </div>
+
+                <input type="hidden" name="store_id" value="{{ $review->store_id }}">
+                <button type="submit" class="btn nagoyameshi-submit-button">レビューを修正</button>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection

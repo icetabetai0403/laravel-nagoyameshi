@@ -9,32 +9,57 @@
         </div>
         <div class="col-md-9 col-lg-10">
             <h1>おすすめ店舗</h1>
-            <div class="row">
-            @foreach ($recommend_stores as $recommend_store)
-                <div class="col-md-4 mb-4">
-                    <a href="{{ route('stores.show', $recommend_store) }}" class="store-link">
-                        @if ($recommend_store->image !== "")
-                        <img src="{{ asset($recommend_store->image) }}" class="img-thumbnail recommend-store-image" alt="{{ $recommend_store->name }}">
-                        @else
-                        <img src="{{ asset('img/dummy.png')}}" class="img-thumbnail recommend-store-image" alt="{{ $recommend_store->name }}">
-                        @endif
-                        <div class="mt-2">
-                            <p class="nagoyameshi-store-label-link">
-                                {{ $recommend_store->name }}<br>
-                            </p>
+            <div id="recommendedStoresCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    @for ($i = 0; $i < count($recommend_stores); $i++)
+                        <div class="carousel-item {{ $i === 0 ? 'active' : '' }}">
+                            <div class="d-flex justify-content-center">
+                                @for ($j = 0; $j < 3; $j++)
+                                    @php
+                                        $index = ($i + $j) % count($recommend_stores);
+                                        $store = $recommend_stores[$index];
+                                    @endphp
+                                    <div class="col-md-4 px-2">
+                                        <a href="{{ route('stores.show', $store) }}" class="store-link">
+                                            @if ($store->image !== "")
+                                            <img src="{{ asset($store->image) }}" class="img-fluid recommend-store-image" alt="{{ $store->name }}">
+                                            @else
+                                            <img src="{{ asset('img/dummy.png')}}" class="img-fluid recommend-store-image" alt="{{ $store->name }}">
+                                            @endif
+                                            <div class="mt-2">
+                                                <p class="nagoyameshi-store-label-link">
+                                                    {{ $store->name }}<br>
+                                                </p>
+                                            </div>
+                                        </a>
+                                        <div>
+                                            <p class="nagoyameshi-store-label">
+                                                @if ($store->reviews()->exists())
+                                                    <span class="nagoyameshi-star-rating" data-rate="{{ round($store->reviews->avg('score') * 2) / 2 }}"></span>
+                                                    <span>{{ round($store->reviews->avg('score'), 1) }}</span><br>
+                                                @endif
+                                                <label>￥{{ $store->price }}</label>
+                                            </p>
+                                        </div>
+                                    </div>
+                                @endfor
+                            </div>
                         </div>
-                    </a>
-                    <div>
-                        <p class="nagoyameshi-store-label">
-                            @if ($recommend_store->reviews()->exists())
-                                <span class="nagoyameshi-star-rating" data-rate="{{ round($recommend_store->reviews->avg('score') * 2) / 2 }}"></span>
-                                <span>{{ round($recommend_store->reviews->avg('score'), 1) }}</span><br>
-                            @endif
-                            <label>￥{{ $recommend_store->price }}</label>
-                        </p>
-                    </div>
+                    @endfor
                 </div>
-            @endforeach
+                <button class="carousel-control-prev" type="button" data-bs-target="#recommendedStoresCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#recommendedStoresCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            <div class="carousel-custom-indicators mt-3 text-center">
+                @for ($i = 0; $i < count($recommend_stores); $i++)
+                    <span class="dot" data-bs-target="#recommendedStoresCarousel" data-bs-slide-to="{{ $i }}"></span>
+                @endfor
             </div>
 
             <div class="d-flex justify-content-between align-items-center mb-3">

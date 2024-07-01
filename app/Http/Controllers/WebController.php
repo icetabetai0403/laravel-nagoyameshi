@@ -14,7 +14,7 @@ class WebController extends Controller
 
         $recently_stores = Store::orderBy('created_at', 'desc')->take(4)->get();
 
-        $recommend_stores = Store::where('recommend_flag', true)->take(3)->get();
+        $recommend_stores = Store::where('recommend_flag', true)->take(6)->get();
 
         return view('web.index', compact('categories', 'recently_stores', 'recommend_stores'));
     }
