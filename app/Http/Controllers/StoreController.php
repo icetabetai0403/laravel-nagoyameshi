@@ -16,23 +16,41 @@ class StoreController extends Controller
      */
     public function index(Request $request)
     {
+        $query = Store::query();
         $keyword = $request->keyword;
-        
-        if ($request->category !== null) {
-            $stores = Store::where('category_id', $request->category)->sortable()->paginate(16);
-            $total_count = Store::where('category_id', $request->category)->count();
-            $category = Category::find($request->category);
-        } elseif ($keyword !== null) {
-            $stores = Store::where('name', 'like', "%{$keyword}%")->sortable()->paginate(16);
-            $total_count = $stores->total();
-            $category = null;
+        $categoryId = $request->category;
+
+        // カテゴリーによるフィルタリング
+        if ($categoryId) {
+            $query->where('category_id', $categoryId);
+            $category = Category::find($categoryId);
         } else {
-            $stores = Store::sortable()->paginate(16);
-            $total_count = "";
             $category = null;
         }
-        
 
+        // キーワードによる検索
+        if ($keyword) {
+            $query->where('name', 'like', "%{$keyword}%");
+        }
+
+        // 価格による並び替え
+        if ($request->price_sort) {
+            $query->orderBy('price', $request->price_sort === 'high_to_low' ? 'desc' : 'asc');
+        }
+
+        // 評価による並び替え
+        if ($request->rating_sort) {
+            $query->withAvg('reviews', 'score')
+                ->orderBy('reviews_avg_score', $request->rating_sort === 'high_to_low' ? 'desc' : 'asc');
+        }
+
+        // デフォルトの並び順
+        if (!$request->price_sort && !$request->rating_sort) {
+            $query->latest();
+        }
+
+        $stores = $query->paginate(16)->appends($request->query());
+        $total_count = $stores->total();
         $categories = Category::all();
 
         return view('stores.index', compact('stores', 'category', 'categories', 'total_count', 'keyword'));

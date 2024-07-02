@@ -25,10 +25,10 @@
                             <p class="card-text review-content">{{ $review->content }}</p>
                             <p class="card-text"><small class="text-muted">{{ $review->created_at->format('Y/m/d') }} by {{ $review->user->name }}</small></p>
                             <form action="{{ route('reviews.destroy', $review->id) }}" method="POST" class="d-inline">
-                                <a href="{{ route('reviews.edit',$review->id) }}" class="btn btn-primary btn-sm">編集</a>
+                                <a href="{{ route('reviews.edit',$review->id) }}" class="btn nagoyameshi-submit-button btn-sm">編集</a>
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">削除</button>
+                                <button type="submit" class="btn btn-outline-danger btn-sm">削除</button>
                             </form>
                         </div>
                     </div>

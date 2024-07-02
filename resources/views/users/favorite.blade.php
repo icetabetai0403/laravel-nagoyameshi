@@ -1,45 +1,54 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container  d-flex justify-content-center mt-3">
+<div class="container d-flex justify-content-center mt-3">
     <div class="w-75">
         <h1>お気に入り</h1>
 
         <hr>
 
-        <div class="row">
-            @foreach ($favorite_stores as $favorite_store)
-                <div class="col-md-7 mt-2">
-                    <div class="d-inline-flex">
-                        <a href="{{ route('stores.show', $favorite_store->id) }}" class="w-25">
+        @foreach ($favorite_stores as $favorite_store)
+        <div class="row mb-4 align-items-center">
+            <div class="col-md-2"> <!-- 変更なし -->
+                <div class="favorite-store-image-wrapper">
+                    <a href="{{ route('stores.show', $favorite_store->id) }}">
                         @if ($favorite_store->image !== "")
-                                <img src="{{ asset($favorite_store->image) }}" class="img-fluid w-100">
-                            @else
-                                <img src="{{ asset('img/dummy.png') }}" class="img-fluid w-100">
-                            @endif
-                        </a>
-                        <div class="container mt-3">
-                            <h5 class="w-100 nagoyameshi-favorite-item-text">{{ $favorite_store->name }}</h5>
-                            <h6 class="w-100 nagoyameshi-favorite-item-text">&yen;{{ $favorite_store->price }}</h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 d-flex align-items-center justify-content-end">
-                    <a href="{{ route('favorites.destroy', $favorite_store->id) }}" class="nagoyameshi-favorite-item-delete" onclick="event.preventDefault(); document.getElementById('favorites-destroy-form{{$favorite_store->id}}').submit();">
-                        削除
+                            <img src="{{ asset($favorite_store->image) }}" class="favorite-store-image" alt="{{ $favorite_store->name }}">
+                        @else
+                            <img src="{{ asset('img/dummy.png') }}" class="favorite-store-image" alt="dummy image">
+                        @endif
                     </a>
-                    <form id="favorites-destroy-form{{$favorite_store->id}}" action="{{ route('favorites.destroy', $favorite_store->id) }}" method="POST" class="d-none">
-                        @csrf
-                        @method('DELETE')
-                    </form>
                 </div>
-                <div class="col-md-3 d-flex align-items-center justify-content-end">
-                <a href="{{ route('reservations.create', $favorite_store->id) }}" class="nagoyameshi-favorite-reservation">予約</a>
-                </div>
-            @endforeach
+            </div>
+            <div class="col-md-4"> <!-- 変更なし -->
+                <a href="{{ route('stores.show', $favorite_store->id) }}" class="nagoyameshi-favorite-item-text h6 text-decoration-none">{{ $favorite_store->name }}</a>
+                @if ($favorite_store->reviews()->exists())
+                    <div class="favorite-store-rating">
+                        <span class="nagoyameshi-star-rating" data-rate="{{ round($favorite_store->reviews->avg('score') * 2) / 2 }}"></span>
+                        <span class="ml-2 small">{{ round($favorite_store->reviews->avg('score'), 1) }}</span>
+                    </div>
+                @endif
+            </div>
+            <div class="col-md-3"> <!-- 変更なし -->
+                <p class="nagoyameshi-favorite-item-text small mb-0">{{ $favorite_store->price }}</p>
+            </div>
+            <div class="col-md-3 d-flex justify-content-end"> <!-- 変更なし -->
+                <a href="{{ route('reservations.create', $favorite_store->id) }}" class="btn nagoyameshi-favorite-button btn-sm mr-2">予約</a>
+                <a href="{{ route('favorites.destroy', $favorite_store->id) }}" class="btn btn-outline-danger btn-sm" onclick="event.preventDefault(); document.getElementById('favorites-destroy-form{{$favorite_store->id}}').submit();">
+                    削除
+                </a>
+                <form id="favorites-destroy-form{{$favorite_store->id}}" action="{{ route('favorites.destroy', $favorite_store->id) }}" method="POST" class="d-none">
+                    @csrf
+                    @method('DELETE')
+                </form>
+            </div>
         </div>
+        @endforeach
 
         <hr>
+        <div class="d-flex justify-content-center">
+            {{ $favorite_stores->links() }}
+        </div>
     </div>
 </div>
 @endsection

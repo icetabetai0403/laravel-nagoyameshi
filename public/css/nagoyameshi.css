@@ -1,4 +1,4 @@
-rbody {
+body {
     background-color: #f8fafc;
     font-family: "メイリオ", "Meiryo", "Hiragino Kaku Gothic ProN",
         "ヒラギノ角ゴ ProN W3", sans-serif;
@@ -152,10 +152,14 @@ label {
 
 .nagoyameshi-favorite-button,
 .nagoyameshi-favorite-reservation {
-    border-radius: 7px;
+    font-size: 14px;
     font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #ffffff;
     background-color: #c44646;
-    width: auto;
 }
 
 .nagoyameshi-favorite-button:hover,
@@ -272,7 +276,6 @@ label {
 
 .store-rating {
     font-size: 24px;
-    margin-bottom: 20px;
 }
 
 .store-rating .nagoyameshi-star-rating {
@@ -401,10 +404,6 @@ hr {
     margin-bottom: 15px;
 }
 
-.nagoyameshi-submit-button {
-    margin-top: 10px;
-}
-
 .recommend-store-image {
     width: 100%;
     height: 280px; /* おすすめ店舗の画像の高さ */
@@ -454,11 +453,6 @@ hr {
     max-width: 100%;
     height: 150px;
     object-fit: cover;
-}
-
-.review-score-color {
-    color: #ffa500;
-    font-size: 1.2rem;
 }
 
 .review-content {
@@ -529,5 +523,89 @@ hr {
 
 .carousel-custom-indicators .dot.active,
 .carousel-custom-indicators .dot:hover {
-    background-color: #007bff;
+    background-color: #c44646;
+}
+
+.pagination .page-link {
+    color: #c44646; /* テキスト色をメインカラーに */
+    background-color: white; /* 背景色を白に */
+    border: 1px solid #ea9595; /* ボーダーをメインカラーに */
+    margin: 0 5px; /* ボタン間の余白を追加 */
+    padding: 10px 15px; /* クリックしやすいようにパディングを追加 */
+    transition: background-color 0.3s, color 0.3s; /* スムーズな変化のためのトランジション */
+}
+
+.pagination .page-link:hover {
+    background-color: #ea9595; /* ホバー時の背景色をメインカラーに */
+    color: white; /* テキスト色を白に */
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #c44646; /* アクティブなページの背景色をメインカラーに */
+    color: white; /* テキスト色を白に */
+    border: 1px solid #c44646; /* ボーダーをメインカラーに */
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #cccccc; /* 無効なボタンのテキスト色を灰色に */
+    background-color: white; /* 背景色を白に */
+    border: 1px solid #cccccc; /* ボーダーを灰色に */
+}
+
+.favorite-store-image-wrapper {
+    width: 100%;
+    max-width: 150px; /* 画像の最大幅を150pxに */
+    padding-top: 84.375px; /* 150pxの56.25%、16:9のアスペクト比を維持 */
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto; /* 中央寄せ */
+}
+
+.favorite-store-image-wrapper a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.favorite-store-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.favorite-store-image-wrapper:hover .favorite-store-image {
+    opacity: 0.7; /* 透明度を下げる */
+}
+
+.favorite-store-rating {
+    font-size: 0.9em;
+}
+
+.btn-outline-danger {
+    background-color: #626262;
+    color: #ffffff;
+    font-size: 14px;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    font-weight: bold;
+    border: none;
+}
+
+.btn-outline-danger:hover {
+    background-color: #ababab;
+}
+
+.nagoyameshi-favorite-item-text {
+    color: inherit;
+    text-decoration: none;
+}
+
+.store-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
 }

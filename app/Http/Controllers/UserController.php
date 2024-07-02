@@ -75,7 +75,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        $favorite_stores = $user->favorite_stores;
+        $favorite_stores = $user->favorite_stores()->paginate(10);
 
         return view('users.favorite', compact('favorite_stores'));
     }
