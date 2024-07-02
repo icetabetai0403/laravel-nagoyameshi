@@ -1,6 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
+
+@section('scripts')
+<script>
+    document.getElementById('price-sort').addEventListener('change', function() {
+        document.getElementById('sort-form').submit();
+    });
+    document.getElementById('rating-sort').addEventListener('change', function() {
+        document.getElementById('sort-form').submit();
+    });
+</script>
+@endsection
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3 col-lg-2">
@@ -8,22 +20,42 @@
             @endcomponent
         </div>
         <div class="col-md-9 col-lg-10">
-            <div class="container mt-5">
+            <div class="container">
                 @if ($category !== null)
-                    <a href="{{ route('stores.index') }}">トップ</a> > {{ $category->name }}
-                    <h1>{{ $category->name }}の店舗一覧{{$total_count}}件</h1>
+                    <a class="text-decoration-none" style="color: #C44646;" href="{{ route('top') }}">トップ</a> > {{ $category->name }}
+                    <h1 class="mt-3">{{ $category->name }}の店舗一覧{{$total_count}}件</h1>
                 @elseif ($keyword !== null)
-                    <a href="{{ route('stores.index') }}">トップ</a> > 店舗一覧
-                    <h1>"{{ $keyword }}"の検索結果{{ $total_count }}件</h1>
+                    <a class="text-decoration-none" style="color: #C44646;" href="{{ route('top') }}">トップ</a> > 店舗一覧
+                    <h1 class="mt-3">"{{ $keyword }}"の検索結果{{ $total_count }}件</h1>
                 @else
-                    <h1>店舗一覧</h1>
+                    <a class="text-decoration-none" style="color: #C44646;" href="{{ route('top') }}">トップ</a> > 店舗一覧
+                    <h1 class="mt-3">店舗一覧</h1>
                 @endif
             </div>
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <div>
-                    Sort By
-                    @sortablelink('price', '価格')
-                    @sortablelink('score', '評価')
+                    <form action="{{ route('stores.index') }}" method="GET" id="sort-form">
+                        @if($category)
+                            <input type="hidden" name="category" value="{{ $category->id }}">
+                        @endif
+                        @if($keyword)
+                            <input type="hidden" name="keyword" value="{{ $keyword }}">
+                        @endif
+                        
+                        <label for="price-sort">価格:</label>
+                        <select name="price_sort" id="price-sort" class="form-control d-inline-block w-auto">
+                            <option value="">選択してください</option>
+                            <option value="high_to_low" {{ request('price_sort') == 'high_to_low' ? 'selected' : '' }}>高い順</option>
+                            <option value="low_to_high" {{ request('price_sort') == 'low_to_high' ? 'selected' : '' }}>安い順</option>
+                        </select>
+
+                        <label for="rating-sort" class="ml-3">評価:</label>
+                        <select name="rating_sort" id="rating-sort" class="form-control d-inline-block w-auto">
+                            <option value="">選択してください</option>
+                            <option value="high_to_low" {{ request('rating_sort') == 'high_to_low' ? 'selected' : '' }}>高い順</option>
+                            <option value="low_to_high" {{ request('rating_sort') == 'low_to_high' ? 'selected' : '' }}>低い順</option>
+                        </select>
+                    </form>
                 </div>
             </div>
             <div class="container mt-4">
@@ -62,3 +94,4 @@
     </div>
 </div>
 @endsection
+

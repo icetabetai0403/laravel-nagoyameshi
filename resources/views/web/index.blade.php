@@ -11,14 +11,10 @@
             <h1>おすすめ店舗</h1>
             <div id="recommendedStoresCarousel" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                    @for ($i = 0; $i < count($recommend_stores); $i++)
-                        <div class="carousel-item {{ $i === 0 ? 'active' : '' }}">
+                    @foreach ($recommend_stores->chunk(3) as $index => $chunk)
+                        <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
                             <div class="d-flex justify-content-center">
-                                @for ($j = 0; $j < 3; $j++)
-                                    @php
-                                        $index = ($i + $j) % count($recommend_stores);
-                                        $store = $recommend_stores[$index];
-                                    @endphp
+                                @foreach ($chunk as $store)
                                     <div class="col-md-4 px-2">
                                         <a href="{{ route('stores.show', $store) }}" class="store-link">
                                             @if ($store->image !== "")
@@ -42,10 +38,10 @@
                                             </p>
                                         </div>
                                     </div>
-                                @endfor
+                                @endforeach
                             </div>
                         </div>
-                    @endfor
+                    @endforeach
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#recommendedStoresCarousel" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -57,9 +53,9 @@
                 </button>
             </div>
             <div class="carousel-custom-indicators mt-3 text-center">
-                @for ($i = 0; $i < count($recommend_stores); $i++)
-                    <span class="dot" data-bs-target="#recommendedStoresCarousel" data-bs-slide-to="{{ $i }}"></span>
-                @endfor
+                @foreach ($recommend_stores->chunk(3) as $index => $chunk)
+                    <span class="dot {{ $index === 0 ? 'active' : '' }}" data-bs-target="#recommendedStoresCarousel" data-bs-slide-to="{{ $index }}"></span>
+                @endforeach
             </div>
 
             <div class="d-flex justify-content-between align-items-center mb-3">

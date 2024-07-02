@@ -20,16 +20,4 @@ document.addEventListener("DOMContentLoaded", function () {
             carouselInstance.to(index);
         });
     });
-
-    // 初期状態で最初のドットをアクティブにする
-    dots[0].classList.add("active");
-
-    // オプション: スワイプでのスライド切り替えを有効にする（モバイル向け）
-    var hammer = new Hammer(carousel);
-    hammer.on("swipeleft", function () {
-        carouselInstance.next();
-    });
-    hammer.on("swiperight", function () {
-        carouselInstance.prev();
-    });
 });

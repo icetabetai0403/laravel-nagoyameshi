@@ -5,7 +5,8 @@
     <!-- 店舗名と平均評価 -->
     <div class="row mb-4">
         <div class="col-12">
-            <h1 class="mb-3">{{$store->name}}</h1>
+            <a class="text-decoration-none" style="color: #C44646;" href="{{ route('top') }}">トップ</a> > <a class="text-decoration-none" style="color: #C44646;" href="{{ route('stores.index', ['category' => $store->category->id]) }}">{{ $store->category->name}}</a> > {{$store->name}}
+            <h1 class="mt-3">{{$store->name}}</h1>
             @if ($store->reviews()->exists())
                 <div class="store-rating">
                     <span class="nagoyameshi-star-rating" data-rate="{{ round($store->reviews->avg('score') * 2) / 2 }}"></span>
@@ -37,7 +38,7 @@
                 <table class="table table-bordered">
                     <tr>
                         <th>価格</th>
-                        <td>￥{{$store->price}}(税込)</td>
+                        <td>{{$store->price}}(税込)</td>
                     </tr>
                     <tr>
                         <th>営業時間</th>
