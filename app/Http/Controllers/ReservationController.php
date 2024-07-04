@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reservation;
+use App\Models\Store;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,7 @@ class ReservationController extends Controller
     {
         $user_id = Auth::id();
 
-        $reservations = Reservation::where('user_id', $user_id)->orderBy('reservation_date', 'desc')->orderBy('reservation_time', 'desc')->get();
+        $reservations = Reservation::where('user_id', $user_id)->orderBy('reservation_date', 'desc')->orderBy('reservation_time', 'desc')->paginate(10);
 
         return view('reservations.index', compact('reservations'));
     }
@@ -29,6 +30,8 @@ class ReservationController extends Controller
      */
     public function create($store_id)
     {
+        $store = Store::findOrFail($store_id);
+        
         $dates = collect(range(1, 21))->map(function ($day) {
             return now()->addDays($day)->format('Y-m-d');
         });
@@ -41,7 +44,7 @@ class ReservationController extends Controller
 
         $peopleNumbers = range(1, 30);
         
-        return view('reservations.create', compact('store_id', 'dates', 'times', 'peopleNumbers'));
+        return view('reservations.create', compact('store', 'dates', 'times', 'peopleNumbers'));
     }
 
     /**
@@ -71,7 +74,9 @@ class ReservationController extends Controller
      */
     public function show(Reservation $reservation)
     {
-        return view('reservations.show', compact('reservation'));
+        $store = Store::findOrFail($reservation->store_id);
+        
+        return view('reservations.show', compact('reservation', 'store'));
     }
 
     /**
@@ -82,7 +87,7 @@ class ReservationController extends Controller
      */
     public function edit(Reservation $reservation)
     {
-        $store_id = $reservation->store_id;
+        $store = Store::findOrFail($reservation->store_id);
 
         $dates = collect(range(1, 21))->map(function ($day) {
             return now()->addDays($day)->format('Y-m-d');
@@ -96,7 +101,7 @@ class ReservationController extends Controller
 
         $peopleNumbers = range(1, 30);
 
-        return view('reservations.edit', compact('reservation', 'store_id', 'dates', 'times', 'peopleNumbers'));
+        return view('reservations.edit', compact('reservation', 'store', 'dates', 'times', 'peopleNumbers'));
     }
 
     /**

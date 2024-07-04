@@ -326,12 +326,12 @@ hr {
 
 .store-details th {
     width: 30%;
-    background-color: #e3d1d1; /* #C44646の明度を上げたカラー */
-    color: black; /* テキストを白色に保持 */
+    background-color: #e3d1d1;
+    color: black;
 }
 
 .store-details td {
-    background-color: #ffffff; /* セルの背景を白に設定 */
+    background-color: #ffffff;
 }
 
 .table-bordered {
@@ -608,4 +608,25 @@ hr {
     display: flex;
     flex-direction: column;
     justify-content: start;
+}
+
+.btn-change {
+    background-color: #d8af76;
+    color: #ffffff;
+    font-size: 14px;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    font-weight: bold;
+    border: none;
+}
+
+.btn-change:hover {
+    background-color: #decfbf;
+}
+
+/* 新しいクラス */
+.d-flex.align-items-center a.btn {
+    margin-right: 0.5rem; /* ボタン間のスペースを調整 */
 }

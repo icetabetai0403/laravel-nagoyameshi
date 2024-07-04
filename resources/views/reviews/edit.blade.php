@@ -4,8 +4,12 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <h2 class="mb-4">レビュー編集</h2>
-            <a href="{{ route('reviews.index') }}" class="mb-4 d-inline-block">戻る</a>
+            <span>
+                <a class="text-decoration-none" style="color: #C44646;" href="{{ route('mypage') }}">マイページ</a> > <a class="text-decoration-none" style="color: #C44646;" href="{{ route('reviews.index') }}">レビュー一覧</a> > レビュー編集
+            </span>
+            <h2 class="mb-4 mt-3">レビュー編集</h2>
+
+            <hr>
 
             <form action="{{ route('reviews.update',$review->id) }}" method="POST">
                 @csrf
@@ -38,8 +42,11 @@
                     <textarea name="content" class="form-control" rows="5">{{ old('content', $review->content) }}</textarea>
                 </div>
 
+                <hr>
+
                 <input type="hidden" name="store_id" value="{{ $review->store_id }}">
                 <button type="submit" class="btn nagoyameshi-submit-button">レビューを修正</button>
+                <a href="{{ route('reviews.index') }}" class="d-inline-block btn btn-outline-danger">戻る</a>
             </form>
         </div>
     </div>

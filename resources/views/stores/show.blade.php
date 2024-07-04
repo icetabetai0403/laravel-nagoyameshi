@@ -82,7 +82,7 @@
                         </div>
                         <div class="col-6">
                             <a href="{{ route('reservations.create', ['store_id' => $store->id]) }}" class="btn nagoyameshi-favorite-reservation text-reservation w-100">
-                                <i class="fas fa-shopping-cart"></i> 予約
+                                <i class="fas fa-store"></i> 予約
                             </a>
                         </div>
                     </div>
