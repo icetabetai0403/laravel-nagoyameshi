@@ -40,7 +40,7 @@
                 <form action="{{ route('reservations.destroy', $reservation->id) }}" method="POST" class="d-inline">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-outline-danger btn-sm">キャンセル</button>
+                    <button type="submit" class="btn nagoyameshi-btn-danger btn-sm">キャンセル</button>
                 </form>
                 @endif
             </div>

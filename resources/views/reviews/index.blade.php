@@ -32,7 +32,7 @@
                                 <a href="{{ route('reviews.edit',$review->id) }}" class="btn nagoyameshi-submit-button btn-sm">編集</a>
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-outline-danger btn-sm">削除</button>
+                                <button type="submit" class="btn nagoyameshi-btn-danger btn-sm">削除</button>
                             </form>
                         </div>
                     </div>

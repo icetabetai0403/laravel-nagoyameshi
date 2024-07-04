@@ -194,12 +194,6 @@ label {
     color: #191919;
 }
 
-.nagoyameshi-delete-submit-button {
-    border-radius: 2px;
-    color: #ffffff;
-    background-color: #d94b0e;
-}
-
 /* 星評価 */
 .nagoyameshi-star-rating {
     position: relative;
@@ -583,7 +577,7 @@ hr {
     font-size: 0.9em;
 }
 
-.btn-outline-danger {
+.nagoyameshi-btn-danger {
     background-color: #626262;
     color: #ffffff;
     font-size: 14px;
@@ -592,10 +586,9 @@ hr {
     line-height: normal;
     letter-spacing: normal;
     font-weight: bold;
-    border: none;
 }
 
-.btn-outline-danger:hover {
+.nagoyameshi-btn-danger:hover {
     background-color: #ababab;
 }
 
@@ -660,13 +653,30 @@ hr {
 
 .area-cards-container .card-body {
     padding: 0.5rem; /* カード内のパディングを調整 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
 }
 
 .area-cards-container .card-title {
-    font-size: 1rem; /* タイトルのフォントサイズを調整 */
+    font-size: 1.2rem;
+    font-weight: bold;
     margin-bottom: 0.25rem;
 }
 
 .area-cards-container .card-text {
-    font-size: 0.8rem; /* テキストのフォントサイズを調整 */
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
+#app {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 100%;
+    min-height: 100vh;
+}
+
+.sidebar-categories {
+    overflow-y: scroll;
 }
