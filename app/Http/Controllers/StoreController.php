@@ -19,6 +19,7 @@ class StoreController extends Controller
         $query = Store::query();
         $keyword = $request->keyword;
         $categoryId = $request->category;
+        $prefecture = $request->prefecture;
 
         // カテゴリーによるフィルタリング
         if ($categoryId) {
@@ -31,6 +32,11 @@ class StoreController extends Controller
         // キーワードによる検索
         if ($keyword) {
             $query->where('name', 'like', "%{$keyword}%");
+        }
+
+        // 都道府県によるフィルタリング
+        if ($prefecture) {
+            $query->where('prefecture', $prefecture);
         }
 
         // 価格による並び替え
@@ -53,7 +59,7 @@ class StoreController extends Controller
         $total_count = $stores->total();
         $categories = Category::all();
 
-        return view('stores.index', compact('stores', 'category', 'categories', 'total_count', 'keyword'));
+        return view('stores.index', compact('stores', 'category', 'categories', 'total_count', 'keyword', 'prefecture'));
     }
 
     /**

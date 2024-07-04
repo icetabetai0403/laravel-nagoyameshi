@@ -23,10 +23,13 @@
             <div class="container">
                 @if ($category !== null)
                     <a class="text-decoration-none" style="color: #C44646;" href="{{ route('top') }}">トップ</a> > {{ $category->name }}
-                    <h1 class="mt-3">{{ $category->name }}の店舗一覧{{$total_count}}件</h1>
+                    <h1 class="mt-3">{{ $category->name }}の店舗一覧 {{$total_count}}件</h1>
                 @elseif ($keyword !== null)
                     <a class="text-decoration-none" style="color: #C44646;" href="{{ route('top') }}">トップ</a> > 店舗一覧
-                    <h1 class="mt-3">"{{ $keyword }}"の検索結果{{ $total_count }}件</h1>
+                    <h1 class="mt-3">"{{ $keyword }}"の検索結果 {{ $total_count }}件</h1>
+                @elseif ($prefecture !== null)
+                    <a class="text-decoration-none" style="color: #C44646;" href="{{ route('top') }}">トップ</a> > {{ $prefecture }}
+                    <h1 class="mt-3">{{ $prefecture }}の店舗一覧 {{ $total_count }}件</h1>
                 @else
                     <a class="text-decoration-none" style="color: #C44646;" href="{{ route('top') }}">トップ</a> > 店舗一覧
                     <h1 class="mt-3">店舗一覧</h1>
@@ -40,6 +43,9 @@
                         @endif
                         @if($keyword)
                             <input type="hidden" name="keyword" value="{{ $keyword }}">
+                        @endif
+                        @if($prefecture)
+                            <input type="hidden" name="prefecture" value="{{ $prefecture }}">
                         @endif
                         
                         <label for="price-sort">価格:</label>

@@ -44,6 +44,7 @@ class StoreController extends AdminController
         $grid->column('phone', __('Phone'));
         $grid->column('regular_holiday', __('Regular holiday'));
         $grid->column('category.name', __('Category Name'));
+        $grid->column('prefecture', __('Prefecture'));
         $grid->column('recommend_flag', __('Recommend Flag'));
         $grid->column('created_at', __('Created at'))->sortable();
         $grid->column('updated_at', __('Updated at'))->sortable();
@@ -84,6 +85,7 @@ class StoreController extends AdminController
         $show->field('phone', __('Phone'));
         $show->field('regular_holiday', __('Regular holiday'));
         $show->field('category.name', __('Category Name'));
+        $show->field('prefecture', __('Prefecture'));
         $show->field('recommend_flag', __('Recommend Flag'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
@@ -109,6 +111,7 @@ class StoreController extends AdminController
         $form->textarea('address', __('Address'));
         $form->text('phone', __('Phone'));
         $form->text('regular_holiday', __('Regular holiday'));
+        $form->text('prefecture', __('Prefecture'));
         $form->select('category_id', __('Category Name'))->options(Category::all()->pluck('name', 'id'));
         $form->switch('recommend_flag', __('Recommend Flag'));
 
