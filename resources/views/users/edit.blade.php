@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-5">
             <span>
-                <a href="{{ route('mypage') }}">マイページ</a> > 会員情報の編集
+                <a class="text-decoration-none" style="color: #C44646;" href="{{ route('mypage') }}">マイページ</a> > 会員情報の編集
             </span>
 
             <h1 class="mt-4 mb-4">会員情報の編集</h1>

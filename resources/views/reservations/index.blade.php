@@ -1,51 +1,55 @@
 @extends('layouts.app')
 
 @section('content')
-<table class="table">
-    <thead>
-        <tr>
-            <th></th>
-            <th>店舗名</th>
-            <th>予約日</th>
-            <th>予約時間</th>
-            <th>予約人数</th>
-            <th>操作</th>
-        </tr>
-    </thead>
-    <tbody>
+<div class="container d-flex justify-content-center">
+    <div class="w-75">
+        <span>
+            <a class="text-decoration-none" style="color: #C44646;" href="{{ route('mypage') }}">マイページ</a> > 予約一覧
+        </span>
+        <h1 class="mt-3">予約一覧</h1>
+        <hr>
         @foreach ($reservations as $reservation)
         @php
             $reservationTime = \Carbon\Carbon::parse($reservation->reservation_date . ' ' . $reservation->reservation_time);
             $now = \Carbon\Carbon::now();
             $isFutureReservation = $reservationTime > $now;
         @endphp
-        <tr>
-            <td>
-                <a href="{{ route('stores.show', $reservation->store->id) }}">
-                    @if ($reservation->store->image)
-                    <img src="{{ asset($reservation->store->image) }}" class="img-thumbnail" style="max-width: 100px;">
-                    @else
-                    <img src="{{ asset('img/dummy.png') }}" class="img-thumbnail" style="max-width: 100px;">
-                    @endif
-                </a>
-            </td>
-            <td><p class="h3">{{ $reservation->store->name }}</p></td>
-            <td>{{ $reservation->reservation_date }}</td>
-            <td>{{ $reservation->formatted_reservation_time }}</td>
-            <td>{{ $reservation->reservation_people_number }}名</td>
-            <td>
-                <a href="{{ route('reservations.show',$reservation->id) }}" class="btn btn-primary">予約詳細</a>
+        <div class="row mb-3 align-items-center">
+            <div class="col-2">
+                <div class="favorite-store-image-wrapper">
+                    <a href="{{ route('stores.show', $reservation->store->id) }}">
+                        @if ($reservation->store->image)
+                            <img src="{{ asset($reservation->store->image) }}" class="favorite-store-image" alt="{{ $reservation->store->name }}">
+                        @else
+                            <img src="{{ asset('img/dummy.png') }}" class="favorite-store-image" alt="dummy image">
+                        @endif
+                    </a>
+                </div>
+            </div>
+            <div class="col-3">
+                <a href="{{ route('stores.show', $reservation->store->id) }}" class="nagoyameshi-favorite-item-text h6 text-decoration-none font-weight-bold">{{ $reservation->store->name }}</a>
+            </div>
+            <div class="col-3">
+                <p class="mb-1">{{ $reservation->reservation_date }}<br>{{ $reservation->formatted_reservation_time }}</p>
+                <p class="mb-0">{{ $reservation->reservation_people_number }}名</p>
+            </div>
+            <div class="col-4 d-flex justify-content-start align-items-center">
+                <a href="{{ route('reservations.show', $reservation->id) }}" class="btn nagoyameshi-submit-button btn-sm mr-1">予約詳細</a>
                 @if ($isFutureReservation)
-                <a href="{{ route('reservations.edit',$reservation->id) }}" class="btn btn-success">予約変更</a>
-                <form action="{{ route('reservations.destroy', $reservation->id) }}" method="POST" style="display:inline;">
+                <a href="{{ route('reservations.edit', $reservation->id) }}" class="btn btn-change btn-sm mr-1">予約変更</a>
+                <form action="{{ route('reservations.destroy', $reservation->id) }}" method="POST" class="d-inline">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger">キャンセル</button>
-                    @endif
+                    <button type="submit" class="btn btn-outline-danger btn-sm">キャンセル</button>
                 </form>
-            </td>
-        </tr>
+                @endif
+            </div>
+        </div>
         @endforeach
-    </tbody>
-</table>
+        <hr>
+        <div class="d-flex justify-content-center">
+            {{ $reservations->links() }}
+        </div>
+    </div>
+</div>
 @endsection

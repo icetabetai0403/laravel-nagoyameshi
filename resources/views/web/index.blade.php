@@ -60,7 +60,7 @@
 
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h1>新着店舗</h1>
-                <a href="{{ route('stores.index', ['sort' => 'id', 'direction' => 'desc']) }}" class="btn btn-link">もっと見る</a>
+                <a href="{{ route('stores.index', ['sort' => 'id', 'direction' => 'desc']) }}" class="btn btn-link text-decoration-none" style="color: black;">もっと見る</a>
             </div>
             <div class="row">
                 @foreach ($recently_stores as $recently_store)
@@ -89,6 +89,14 @@
                 </div>
                 @endforeach
             </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h1>人気エリアから探す</h1>
+            </div>
+            <div class="row">
+                <!-- ここにエリア名と対象店舗数のカードを記載 -->
+            </div>
+
         </div>
     </div>
 </div>

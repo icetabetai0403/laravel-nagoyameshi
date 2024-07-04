@@ -12,7 +12,7 @@ class ReviewController extends Controller
     {
         $user_id = Auth::id();
         
-        $reviews = Review::where('user_id', $user_id)->get();
+        $reviews = Review::where('user_id', $user_id)->orderBy('created_at', 'desc')->paginate(20);
 
         return view('reviews.index', compact('reviews'));
     }

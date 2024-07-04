@@ -2,7 +2,11 @@
 
 @section('content')
 <div class="container">
-    <h1>レビュー一覧</h1>
+    <span>
+        <a class="text-decoration-none" style="color: #C44646;" href="{{ route('mypage') }}">マイページ</a> > レビュー一覧
+    </span>
+    <h1 class="mt-3">レビュー一覧</h1>
+    <hr>
     <div class="row">
         @foreach ($reviews as $review)
         <div class="col-md-6 mb-4">
@@ -36,6 +40,10 @@
             </div>
         </div>
         @endforeach
+        <hr>
+        <div class="d-flex justify-content-center">
+            {{ $reviews->links() }}
+        </div>
     </div>
 </div>
 @endsection
