@@ -21,6 +21,7 @@ class Store extends Model
         'phone',
         'regular_holiday',
         'category_id',
+        'prefecture',
         'recommend_flag',
     ];
 
