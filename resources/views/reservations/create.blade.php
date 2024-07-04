@@ -59,7 +59,7 @@
                 </div>
             </div>
             <div class="text-center mt-3">
-                <a href="{{ route('reservations.index') }}" class="btn btn-outline-danger">戻る</a>
+                <a href="{{ route('reservations.index') }}" class="btn nagoyameshi-btn-danger">戻る</a>
             </div>
         </div>
     </div>

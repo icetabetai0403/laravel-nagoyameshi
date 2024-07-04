@@ -46,7 +46,7 @@
 
                 <input type="hidden" name="store_id" value="{{ $review->store_id }}">
                 <button type="submit" class="btn nagoyameshi-submit-button">レビューを修正</button>
-                <a href="{{ route('reviews.index') }}" class="d-inline-block btn btn-outline-danger">戻る</a>
+                <a href="{{ route('reviews.index') }}" class="d-inline-block btn nagoyameshi-btn-danger">戻る</a>
             </form>
         </div>
     </div>

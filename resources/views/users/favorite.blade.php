@@ -34,7 +34,7 @@
             </div>
             <div class="col-3 d-flex justify-content-end"> <!-- col-md-3 から col-3 に変更 -->
                 <a href="{{ route('reservations.create', $favorite_store->id) }}" class="btn nagoyameshi-favorite-button btn-sm mr-1">予約</a> <!-- mr-2 から mr-1 に変更 -->
-                <a href="{{ route('favorites.destroy', $favorite_store->id) }}" class="btn btn-outline-danger btn-sm" onclick="event.preventDefault(); document.getElementById('favorites-destroy-form{{$favorite_store->id}}').submit();">
+                <a href="{{ route('favorites.destroy', $favorite_store->id) }}" class="btn nagoyameshi-btn-danger btn-sm" onclick="event.preventDefault(); document.getElementById('favorites-destroy-form{{$favorite_store->id}}').submit();">
                     削除
                 </a>
                 <form id="favorites-destroy-form{{$favorite_store->id}}" action="{{ route('favorites.destroy', $favorite_store->id) }}" method="POST" class="d-none">

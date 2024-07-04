@@ -260,11 +260,11 @@
                             <p class="text-center">一度退会するとデータはすべて削除され復旧はできません。</p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn dashboard-delete-link" data-bs-dismiss="modal">キャンセル</button>
+                            <button type="button" class="btn nagoyameshi-btn-danger" data-bs-dismiss="modal">キャンセル</button>
                             <form method="POST" action="{{ route('mypage.destroy') }}">
                                 @csrf
                                 <input type="hidden" name="_method" value="DELETE">
-                                <button type="submit" class="btn nagoyameshi-delete-submit-button">退会する</button>
+                                <button type="submit" class="btn nagoyameshi-submit-button">退会する</button>
                             </form>
                         </div>
                     </div>

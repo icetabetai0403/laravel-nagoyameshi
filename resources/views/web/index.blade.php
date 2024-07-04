@@ -94,43 +94,41 @@
                 <h1>人気エリアから探す</h1>
             </div>
             <div class="container-fluid area-cards-container">
+                <!-- ここにエリア名と対象店舗数のカードを記載 -->
                 <div class="row">
-                    <!-- ここにエリア名と対象店舗数のカードを記載 -->
-                    <div class="row">
-                        @php
-                            $areas = [
-                                '東京' => '東京.jpg',
-                                '神奈川' => '神奈川.jpg',
-                                '愛知' => '愛知.jpg',
-                                '大阪' => '大阪.jpg',
-                                '京都' => '京都.jpg',
-                                '福岡' => '福岡.jpg'
-                            ];
-                        @endphp
-                        @foreach ($areas as $area => $image)
-                            <div class="col-md-4 mb-4">
-                                <a href="{{ route('stores.index', ['prefecture' => $area]) }}" class="text-decoration-none">
-                                    <div class="card area-card">
-                                        <div class="row g-0">
-                                            <div class="col-4">
-                                                <div class="area-image-wrapper">
-                                                    <img src="{{ asset('img/' . $image) }}" class="img-fluid area-image" alt="{{ $area }}">
-                                                </div>
+                    @php
+                        $areas = [
+                            '東京' => '東京.jpg',
+                            '神奈川' => '神奈川.jpg',
+                            '愛知' => '愛知.jpg',
+                            '大阪' => '大阪.jpg',
+                            '京都' => '京都.jpg',
+                            '福岡' => '福岡.jpg'
+                        ];
+                    @endphp
+                    @foreach ($areas as $area => $image)
+                        <div class="col-md-4 mb-4">
+                            <a href="{{ route('stores.index', ['prefecture' => $area]) }}" class="text-decoration-none">
+                                <div class="card area-card">
+                                    <div class="row g-0 h-100">
+                                        <div class="col-4">
+                                            <div class="area-image-wrapper">
+                                                <img src="{{ asset('img/' . $image) }}" class="img-fluid area-image" alt="{{ $area }}">
                                             </div>
-                                            <div class="col-8">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">{{ $area }}</h5>
-                                                    <p class="card-text">
-                                                        {{ App\Models\Store::where('prefecture', $area)->count() }}件
-                                                    </p>
-                                                </div>
+                                        </div>
+                                        <div class="col-8 d-flex align-items-center">
+                                            <div class="card-body">
+                                                <h5 class="card-title mb-0">{{ $area }}</h5>
+                                                <p class="card-text mb-0">
+                                                    {{ App\Models\Store::where('prefecture', $area)->count() }}件
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
-                                </a>
-                            </div>
-                        @endforeach
-                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
                 </div>
             </div>
 
