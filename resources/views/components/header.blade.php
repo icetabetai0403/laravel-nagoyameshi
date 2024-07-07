@@ -27,13 +27,13 @@
                 @else
                 <li class="nav-item mr-5">
                     <a class="nav-link" href="{{ route('mypage') }}">
-                        <i class="fas fa-user mr-1"></i><label>マイページ</label>
+                        <i class="fas fa-user mr-1"></i>マイページ
                     </a>
                 </li>
                 @if (Auth::user()->paid_membership_flag == true)
                 <li class="nav-item mr-5">
                     <a class="nav-link" href="{{ route('mypage.favorite') }}">
-                        <i class="far fa-heart"></i><label>お気に入り</label>
+                        <i class="far fa-heart"></i>お気に入り
                     </a>
                 </li>
                 @endif
