@@ -1,13 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-3 col-lg-2">
-            @component('components.sidebar', ['categories' => $categories])
-            @endcomponent
+<div class="container-fluid content-wrapper">
+    <div class="row sidebar-row">
+        <div class="col-md-3 col-lg-2 sidebar-wrapper">
+            <div class="sidebar-container" id="sidebar">
+                @component('components.sidebar', ['categories' => $categories])
+                @endcomponent
+            </div>
         </div>
-        <div class="col-md-9 col-lg-10">
+        <div class="col-md-9 col-lg-10 main-content" id="main-content">
             <h1>おすすめ店舗</h1>
             <div id="recommendedStoresCarousel" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
@@ -135,4 +137,5 @@
         </div>
     </div>
 </div>
+
 @endsection
