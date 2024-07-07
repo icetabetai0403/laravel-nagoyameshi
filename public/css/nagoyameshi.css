@@ -341,6 +341,32 @@ hr {
     border: 1px solid #dee2e6;
 }
 
+.content-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar-row {
+    flex: 1;
+    width: 100%;
+}
+
+.sidebar-wrapper {
+    position: relative;
+}
+
+.sidebar-container {
+    position: sticky;
+    top: 0;
+    height: auto;
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
+.main-content {
+    overflow-y: auto;
+}
+
 .sidebar-categories {
     background-color: #f8f8f8;
     border-radius: 5px;
@@ -679,10 +705,6 @@ hr {
     grid-template-rows: auto 1fr auto;
     grid-template-columns: 100%;
     min-height: 100vh;
-}
-
-.sidebar-categories {
-    overflow-y: scroll;
 }
 
 .menu-item {
