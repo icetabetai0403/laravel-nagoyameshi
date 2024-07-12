@@ -26,9 +26,9 @@ Route::get('/', [WebController::class, 'index'])->name('top');
 
 require __DIR__.'/auth.php';
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::resource('stores', StoreController::class);
+Route::resource('stores', StoreController::class)->only(['index', 'show']);
 
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::controller(ReviewController::class)->group(function () {
         Route::post('reviews', 'store')->name('reviews.store');
         Route::get('reviews', 'index')->name('reviews.index');

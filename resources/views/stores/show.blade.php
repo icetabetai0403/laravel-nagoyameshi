@@ -59,35 +59,37 @@
                 </table>
             </div>
 
-            @if (Auth::user()->paid_membership_flag == true)
-                <div class="store-actions">
-                    <div class="row">
-                        <div class="col-6">
-                            @if(Auth::user()->favorite_stores()->where('store_id', $store->id)->exists())
-                                <form id="favorites-destroy-form" action="{{ route('favorites.destroy', $store->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn nagoyameshi-favorite-button text-favorite w-100">
-                                        <i class="fa fa-heart"></i> お気に入り解除
-                                    </button>
-                                </form>
-                            @else
-                                <form id="favorites-store-form" action="{{ route('favorites.store', $store->id) }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="btn nagoyameshi-favorite-button text-favorite w-100">
-                                        <i class="fa fa-heart"></i> お気に入り
-                                    </button>
-                                </form>
-                            @endif
-                        </div>
-                        <div class="col-6">
-                            <a href="{{ route('reservations.create', ['store_id' => $store->id]) }}" class="btn nagoyameshi-favorite-reservation text-reservation w-100">
-                                <i class="fas fa-store"></i> 予約
-                            </a>
+            @auth
+                @if (Auth::user()->paid_membership_flag == true)
+                    <div class="store-actions">
+                        <div class="row">
+                            <div class="col-6">
+                                @if(Auth::user()->favorite_stores()->where('store_id', $store->id)->exists())
+                                    <form id="favorites-destroy-form" action="{{ route('favorites.destroy', $store->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn nagoyameshi-favorite-button text-favorite w-100">
+                                            <i class="fa fa-heart"></i> お気に入り解除
+                                        </button>
+                                    </form>
+                                @else
+                                    <form id="favorites-store-form" action="{{ route('favorites.store', $store->id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn nagoyameshi-favorite-button text-favorite w-100">
+                                            <i class="fa fa-heart"></i> お気に入り
+                                        </button>
+                                    </form>
+                                @endif
+                            </div>
+                            <div class="col-6">
+                                <a href="{{ route('reservations.create', ['store_id' => $store->id]) }}" class="btn nagoyameshi-favorite-reservation text-reservation w-100">
+                                    <i class="fas fa-store"></i> 予約
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endif
+                @endif
+            @endauth
         </div>
     </div>
 
@@ -117,40 +119,42 @@
 
         <!-- レビュー投稿フォーム -->
         <div class="col-md-5">
-            @if (Auth::user()->paid_membership_flag == true)
-                <div class="review-form mb-4">
-                    <h4 class="mb-3">レビューを投稿</h4>
-                    <form method="POST" action="{{ route('reviews.store') }}">
-                        @csrf
-                        <div class="form-group mb-3">
-                            <label for="score" class="mb-2">評価</label>
-                            <select name="score" id="score" class="form-control review-score-color">
-                                <option value="5">★★★★★</option>
-                                <option value="4">★★★★</option>
-                                <option value="3">★★★</option>
-                                <option value="2">★★</option>
-                                <option value="1">★</option>
-                            </select>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="title" class="mb-2">タイトル</label>
-                            @error('title')
-                                <span class="text-danger">タイトルを入力してください</span>
-                            @enderror
-                            <input type="text" name="title" id="title" class="form-control">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="content" class="mb-2">レビュー内容</label>
-                            @error('content')
-                                <span class="text-danger">レビュー内容を入力してください</span>
-                            @enderror
-                            <textarea name="content" id="content" class="form-control" rows="4"></textarea>
-                        </div>
-                        <input type="hidden" name="store_id" value="{{$store->id}}">
-                        <button type="submit" class="btn nagoyameshi-submit-button">レビューを追加</button>
-                    </form>
-                </div>
-            @endif
+            @auth
+                @if (Auth::user()->paid_membership_flag == true)
+                    <div class="review-form mb-4">
+                        <h4 class="mb-3">レビューを投稿</h4>
+                        <form method="POST" action="{{ route('reviews.store') }}">
+                            @csrf
+                            <div class="form-group mb-3">
+                                <label for="score" class="mb-2">評価</label>
+                                <select name="score" id="score" class="form-control review-score-color">
+                                    <option value="5">★★★★★</option>
+                                    <option value="4">★★★★</option>
+                                    <option value="3">★★★</option>
+                                    <option value="2">★★</option>
+                                    <option value="1">★</option>
+                                </select>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="title" class="mb-2">タイトル</label>
+                                @error('title')
+                                    <span class="text-danger">タイトルを入力してください</span>
+                                @enderror
+                                <input type="text" name="title" id="title" class="form-control">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="content" class="mb-2">レビュー内容</label>
+                                @error('content')
+                                    <span class="text-danger">レビュー内容を入力してください</span>
+                                @enderror
+                                <textarea name="content" id="content" class="form-control" rows="4"></textarea>
+                            </div>
+                            <input type="hidden" name="store_id" value="{{$store->id}}">
+                            <button type="submit" class="btn nagoyameshi-submit-button">レビューを追加</button>
+                        </form>
+                    </div>
+                @endif
+            @endauth
         </div>
     </div>
 </div>
