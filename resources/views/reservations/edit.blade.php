@@ -57,13 +57,11 @@
                         </div>
                         <input type="hidden" name="store_id" value="{{ $store->id }}">
                         <div class="text-center mt-5">
+                            <a href="{{ route('reservations.index') }}" class="btn nagoyameshi-btn-danger me-3">戻る</a>
                             <button type="submit" class="btn nagoyameshi-submit-button">変更</button>
                         </div>
                     </form>
                 </div>
-            </div>
-            <div class="text-center mt-3">
-                <a href="{{ route('reservations.index') }}" class="btn nagoyameshi-btn-danger">戻る</a>
             </div>
         </div>
     </div>

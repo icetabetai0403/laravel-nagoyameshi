@@ -15,11 +15,13 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-3 col-lg-2">
-            @component('components.sidebar', ['categories' => $categories])
-            @endcomponent
+        <div class="col-md-3 col-lg-2 sidebar-wrapper">
+            <div class="sidebar-container" id="sidebar">
+                @component('components.sidebar', ['categories' => $categories])
+                @endcomponent
+            </div>
         </div>
-        <div class="col-md-9 col-lg-10">
+        <div class="col-md-9 col-lg-10 main-content" id="main-content">
             <div class="container">
                 @if ($category !== null)
                     <a class="text-decoration-none" style="color: #C44646;" href="{{ route('top') }}">トップ</a> > {{ $category->name }}

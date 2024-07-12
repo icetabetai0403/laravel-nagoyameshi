@@ -39,10 +39,10 @@
                             <p class="form-control-plaintext">{{ $reservation->reservation_people_number }}名</p>
                         </div>
                     </div>
+                    <div class="text-center mt-3">
+                        <a href="{{ route('reservations.index') }}" class="btn nagoyameshi-btn-danger">戻る</a>
+                    </div>
                 </div>
-            </div>
-            <div class="text-center mt-3">
-                <a href="{{ route('reservations.index') }}" class="btn nagoyameshi-btn-danger">戻る</a>
             </div>
         </div>
     </div>

@@ -1,42 +1,27 @@
 function adjustSidebar() {
-    const sidebar = document.getElementById("sidebar");
+    const sidebar = document.querySelector(".sidebar-wrapper");
     const mainContent = document.getElementById("main-content");
-    const header = document.querySelector("header"); // ヘッダーの要素に合わせて調整してください
-    const footer = document.querySelector("footer"); // フッターの要素に合わせて調整してください
+    const headerHeight = parseInt(
+        getComputedStyle(document.documentElement).getPropertyValue(
+            "--header-height"
+        )
+    );
 
     function update() {
-        const headerRect = header.getBoundingClientRect();
-        const footerRect = footer.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
         const mainContentHeight = mainContent.offsetHeight;
-        const sidebarHeight = sidebar.scrollHeight;
 
-        if (headerRect.bottom > 0) {
-            sidebar.style.top = `${headerRect.bottom}px`;
-        } else {
-            sidebar.style.top = "0px";
-        }
-
-        if (footerRect.top < window.innerHeight) {
-            sidebar.style.bottom = `${window.innerHeight - footerRect.top}px`;
-        } else {
-            sidebar.style.bottom = "0px";
-        }
-
-        const availableHeight =
-            window.innerHeight -
-            parseInt(sidebar.style.top) -
-            parseInt(sidebar.style.bottom || 0);
-
-        if (mainContentHeight > sidebarHeight) {
-            sidebar.style.position = "static";
-            sidebar.style.height = "auto";
-            sidebar.style.maxHeight = "none";
-            sidebar.style.overflowY = "visible";
-        } else {
+        if (window.innerWidth >= 768) {
+            // デスクトップビュー
+            sidebar.style.height = `${Math.max(
+                windowHeight - headerHeight,
+                mainContentHeight
+            )}px`;
             sidebar.style.position = "sticky";
+        } else {
+            // モバイルビュー
             sidebar.style.height = "auto";
-            sidebar.style.maxHeight = `${availableHeight}px`;
-            sidebar.style.overflowY = "auto";
+            sidebar.style.position = "static";
         }
     }
 

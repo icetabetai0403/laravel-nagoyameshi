@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid content-wrapper">
-    <div class="row sidebar-row">
+<div class="container-fluid">
+    <div class="row">
         <div class="col-md-3 col-lg-2 sidebar-wrapper">
             <div class="sidebar-container" id="sidebar">
                 @component('components.sidebar', ['categories' => $categories])

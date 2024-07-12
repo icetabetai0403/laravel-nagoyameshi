@@ -127,7 +127,12 @@ label {
     color: #ea9595;
 }
 
+:root {
+    --header-height: 60px;
+}
+
 .nagoyameshi-header-container {
+    height: var(--header-height);
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
 }
@@ -352,19 +357,23 @@ hr {
 }
 
 .sidebar-wrapper {
-    position: relative;
+    position: sticky;
+    top: var(--header-height);
+    height: calc(100vh - var(--header-height));
+    overflow-y: auto;
+    padding-top: 0;
 }
 
 .sidebar-container {
-    position: sticky;
-    top: 0;
-    height: auto;
-    max-height: 100vh;
-    overflow-y: auto;
+    height: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .main-content {
-    overflow-y: auto;
+    min-height: calc(100vh - var(--header-height));
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .sidebar-categories {
