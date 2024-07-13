@@ -277,6 +277,17 @@ label {
     width: 100%;
 }
 
+@media (max-width: 767px) {
+    .store-image img {
+        max-height: 200px;
+    }
+
+    .reviews {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+}
+
 .store-rating {
     font-size: 24px;
 }
