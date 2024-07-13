@@ -14,9 +14,9 @@
             $now = \Carbon\Carbon::now();
             $isFutureReservation = $reservationTime > $now;
         @endphp
-        <div class="row mb-3 align-items-center">
-            <div class="col-2">
-                <div class="favorite-store-image-wrapper">
+        <div class="reservation-container row mb-3 align-items-center"> <!-- reservation-container クラスを追加 -->
+            <div class="col-12 col-md-2 mb-3 mb-md-0">
+                <div class="reservation-store-image-wrapper">
                     <a href="{{ route('stores.show', $reservation->store->id) }}">
                         @if ($reservation->store->image)
                             <img src="{{ asset($reservation->store->image) }}" class="favorite-store-image" alt="{{ $reservation->store->name }}">
@@ -26,14 +26,14 @@
                     </a>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col-12 col-md-3 mb-3 mb-md-0">
                 <a href="{{ route('stores.show', $reservation->store->id) }}" class="nagoyameshi-favorite-item-text h6 text-decoration-none font-weight-bold">{{ $reservation->store->name }}</a>
             </div>
-            <div class="col-3">
+            <div class="col-12 col-md-3 mb-3 mb-md-0">
                 <p class="mb-1">{{ $reservation->reservation_date }}<br>{{ $reservation->formatted_reservation_time }}</p>
                 <p class="mb-0">{{ $reservation->reservation_people_number }}名</p>
             </div>
-            <div class="col-4 d-flex justify-content-start align-items-center">
+            <div class="col-12 col-md-4 d-flex justify-content-start align-items-center">
                 <a href="{{ route('reservations.show', $reservation->id) }}" class="btn nagoyameshi-submit-button btn-sm mr-1">予約詳細</a>
                 @if ($isFutureReservation)
                 <a href="{{ route('reservations.edit', $reservation->id) }}" class="btn btn-change btn-sm mr-1">予約変更</a>
