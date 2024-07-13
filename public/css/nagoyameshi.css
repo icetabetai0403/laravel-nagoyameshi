@@ -783,3 +783,119 @@ hr {
 .nav-link {
     font-weight: bold;
 }
+
+/* ヘッダーのスタイル調整 */
+.nagoyameshi-header-container {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* 検索フォームのスタイル調整 */
+@media (max-width: 767.98px) {
+    .navbar-nav .nav-item:first-child {
+        width: 100%;
+    }
+}
+
+/* ハンバーガーメニューのスタイル調整 */
+@media (max-width: 767.98px) {
+    .sticky-top-mobile {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: 1030;
+    }
+
+    body {
+        padding-top: var(--header-height);
+    }
+
+    .navbar-collapse {
+        position: fixed;
+        top: var(--header-height);
+        right: 0;
+        width: 100%;
+        height: calc(100vh - var(--header-height));
+        background-color: #ffffff;
+        padding: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
+        transform: translateX(100%);
+        opacity: 0;
+        overflow-y: auto;
+    }
+
+    .navbar-collapse.show {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    .navbar-nav {
+        padding-top: 15px;
+    }
+
+    .navbar-nav .nav-item {
+        padding: 10px 0;
+    }
+
+    .navbar-nav .nav-link {
+        font-size: 1.1em;
+        padding: 10px 0;
+    }
+}
+
+/* PCサイズでは固定を解除 */
+@media (min-width: 768px) {
+    .sticky-top-mobile {
+        position: static;
+    }
+
+    body {
+        padding-top: 0;
+    }
+}
+
+/* ロゴのスタイル調整 */
+.navbar-brand img {
+    max-height: 40px;
+    width: auto;
+}
+
+/* ハンバーガーメニュー内の不要な<hr>を非表示 */
+@media (max-width: 767.98px) {
+    hr {
+        opacity: 0;
+    }
+}
+
+/* マイページのメニューアイテムのスタイル調整 */
+@media (max-width: 575.98px) {
+    .menu-link {
+        padding: 10px;
+    }
+
+    .icon-wrapper {
+        width: 40px;
+    }
+
+    .icon-wrapper i {
+        font-size: 1.5em;
+    }
+
+    .menu-content label {
+        font-size: 0.9em;
+    }
+
+    .menu-content p {
+        font-size: 0.8em;
+    }
+
+    .arrow-wrapper {
+        width: 20px;
+    }
+
+    .arrow-wrapper i {
+        font-size: 1.2em;
+    }
+}
