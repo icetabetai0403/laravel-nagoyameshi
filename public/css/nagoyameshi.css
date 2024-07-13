@@ -878,6 +878,10 @@ hr {
     hr {
         opacity: 0;
     }
+
+    .navbar-nav > hr {
+        opacity: 0.25;
+    }
 }
 
 /* マイページのメニューアイテムのスタイル調整 */
@@ -982,5 +986,52 @@ hr {
         width: 100%;
         height: 100%;
         object-fit: cover;
+    }
+}
+
+/* 既存のスタイルに追加 */
+
+@media (max-width: 767.98px) {
+    .sidebar-wrapper {
+        display: none;
+    }
+
+    .main-content {
+        width: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .navbar-collapse .humberger-categories .sidebar-title {
+        color: #333;
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .navbar-collapse .humberger-categories .category-list {
+        padding-left: 20px;
+    }
+
+    .navbar-collapse .humberger-categories .category-item {
+        list-style-type: none;
+    }
+
+    .navbar-collapse .humberger-categories .category-link {
+        color: #333;
+        text-decoration: none;
+        display: block;
+        padding: 5px 0;
+    }
+
+    #sort-form > div > div {
+        margin-bottom: 10px;
+    }
+
+    .humberger-categories {
+        margin-bottom: 20px;
+    }
+
+    .store-sort {
+        flex-flow: column;
     }
 }

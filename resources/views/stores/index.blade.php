@@ -15,7 +15,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-3 col-lg-2 sidebar-wrapper">
+        <div class="col-md-3 col-lg-2 sidebar-wrapper d-none d-md-block">
             <div class="sidebar-container" id="sidebar">
                 @component('components.sidebar', ['categories' => $categories])
                 @endcomponent
@@ -50,19 +50,25 @@
                             <input type="hidden" name="prefecture" value="{{ $prefecture }}">
                         @endif
                         
-                        <label for="price-sort">価格:</label>
-                        <select name="price_sort" id="price-sort" class="form-control d-inline-block w-auto">
-                            <option value="">選択してください</option>
-                            <option value="high_to_low" {{ request('price_sort') == 'high_to_low' ? 'selected' : '' }}>高い順</option>
-                            <option value="low_to_high" {{ request('price_sort') == 'low_to_high' ? 'selected' : '' }}>安い順</option>
-                        </select>
+                        <div class="d-flex store-sort">
+                            <div class="me-3">                            
+                                <label for="price-sort">価格:</label>
+                                <select name="price_sort" id="price-sort" class="form-control d-inline-block w-auto">
+                                    <option value="">選択してください</option>
+                                    <option value="high_to_low" {{ request('price_sort') == 'high_to_low' ? 'selected' : '' }}>高い順</option>
+                                    <option value="low_to_high" {{ request('price_sort') == 'low_to_high' ? 'selected' : '' }}>安い順</option>
+                                </select>
+                            </div>
 
-                        <label for="rating-sort" class="ml-3">評価:</label>
-                        <select name="rating_sort" id="rating-sort" class="form-control d-inline-block w-auto">
-                            <option value="">選択してください</option>
-                            <option value="high_to_low" {{ request('rating_sort') == 'high_to_low' ? 'selected' : '' }}>高い順</option>
-                            <option value="low_to_high" {{ request('rating_sort') == 'low_to_high' ? 'selected' : '' }}>低い順</option>
-                        </select>
+                            <div>
+                                <label for="rating-sort" class="ml-3">評価:</label>
+                                <select name="rating_sort" id="rating-sort" class="form-control d-inline-block w-auto">
+                                    <option value="">選択してください</option>
+                                    <option value="high_to_low" {{ request('rating_sort') == 'high_to_low' ? 'selected' : '' }}>高い順</option>
+                                    <option value="low_to_high" {{ request('rating_sort') == 'low_to_high' ? 'selected' : '' }}>低い順</option>
+                                </select>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

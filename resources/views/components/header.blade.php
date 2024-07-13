@@ -42,6 +42,23 @@
                         </li>
                     @endif
                 @endguest
+
+                <hr>
+                
+                <li class="nav-item d-md-none">
+                    <div class="humberger-categories mt-3">
+                        <h3 class="sidebar-title">カテゴリーから探す</h3>
+                        <ul class="category-list">
+                            @foreach ($categories as $category)
+                                <li class="category-item">
+                                    <a href="{{ route('stores.index', ['category' => $category->id]) }}" class="category-link">
+                                        {{ $category->name }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
