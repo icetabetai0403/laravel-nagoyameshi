@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container d-flex justify-content-center mt-3">
-    <div class="w-50">
+<div class="container-fluid d-flex justify-content-center mt-3">
+    <div class="col-12 col-md-8 col-lg-6">
 
         @if (session('success'))
         <div class="alert alert-success">
