@@ -11,7 +11,8 @@
         </div>
         <div class="col-md-9 col-lg-10 main-content" id="main-content">
             <h1>おすすめ店舗</h1>
-            <div id="recommendedStoresCarousel" class="carousel slide" data-bs-ride="carousel">
+            <!-- PC用のカルーセル、lgサイズ以上で表示 -->
+            <div id="recommendedStoresCarousel" class="carousel slide d-none d-lg-block" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     @foreach ($recommend_stores->chunk(3) as $index => $chunk)
                         <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
@@ -54,10 +55,63 @@
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
+
+            <!-- スマホ用のカルーセル、lg以下で表示 -->
+            <div id="recommendedStoresCarouselMobile" class="carousel slide d-lg-none" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    @foreach ($recommend_stores as $index => $store)
+                        <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                            <div class="d-flex justify-content-center">
+                                <div class="col-12">
+                                    <a href="{{ route('stores.show', $store) }}" class="store-link">
+                                        @if ($store->image !== "")
+                                        <img src="{{ asset($store->image) }}" class="img-fluid recommend-store-image" alt="{{ $store->name }}">
+                                        @else
+                                        <img src="{{ asset('img/dummy.png')}}" class="img-fluid recommend-store-image" alt="{{ $store->name }}">
+                                        @endif
+                                        <div class="mt-2">
+                                            <p class="nagoyameshi-store-label-link">
+                                                {{ $store->name }}<br>
+                                            </p>
+                                        </div>
+                                    </a>
+                                    <div>
+                                        <p class="nagoyameshi-store-label">
+                                            @if ($store->reviews()->exists())
+                                                <span class="nagoyameshi-star-rating" data-rate="{{ round($store->reviews->avg('score') * 2) / 2 }}"></span>
+                                                <span>{{ round($store->reviews->avg('score'), 1) }}</span><br>
+                                            @endif
+                                            <label>￥{{ $store->price }}</label>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#recommendedStoresCarouselMobile" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#recommendedStoresCarouselMobile" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+
             <div class="carousel-custom-indicators mt-3 text-center">
-                @foreach ($recommend_stores->chunk(3) as $index => $chunk)
-                    <span class="dot {{ $index === 0 ? 'active' : '' }}" data-bs-target="#recommendedStoresCarousel" data-bs-slide-to="{{ $index }}"></span>
-                @endforeach
+                <!-- PC用インジケーター -->
+                <div class="d-none d-lg-block">
+                    @foreach ($recommend_stores->chunk(3) as $index => $chunk)
+                        <span class="dot {{ $index === 0 ? 'active' : '' }}" data-bs-target="#recommendedStoresCarousel" data-bs-slide-to="{{ $index }}"></span>
+                    @endforeach
+                </div>
+                <!-- モバイル用インジケーター -->
+                <div class="d-lg-none">
+                    @foreach ($recommend_stores as $index => $store)
+                        <span class="dot {{ $index === 0 ? 'active' : '' }}" data-bs-target="#recommendedStoresCarouselMobile" data-bs-slide-to="{{ $index }}"></span>
+                    @endforeach
+                </div>
             </div>
 
             <div class="d-flex justify-content-between align-items-center mb-4">
