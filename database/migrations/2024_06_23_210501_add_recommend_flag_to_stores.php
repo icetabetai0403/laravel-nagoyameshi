@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('stores', function (Blueprint $table) {
-            $tablr->dropColumn('recommend_flag');
+            $table->dropColumn('recommend_flag');
         });
     }
 };
